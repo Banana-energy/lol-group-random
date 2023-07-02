@@ -32,7 +32,7 @@
         placeholder="请输入英雄池数量"
       />
     </a-form-item>
-    <a-form-item class="!mb-0" label="英雄池规则">
+    <a-form-item class="!mb-0" field="heroRules" label="英雄池规则">
       <a-form-item
         v-for="item in roleList"
         :key="item"
@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import { FormInstance, FieldRule } from '@arco-design/web-vue';
-import { PlayerInfo,RoleHero } from './index.vue';
+import { PlayerInfo, RoleHero } from './index.vue';
 import { TransferItem } from '@arco-design/web-vue/es/transfer/interface';
 
 const props = defineProps<{
@@ -111,6 +111,21 @@ const rules: Rules = {
     { type: 'number', message: '请输入数字' },
     { min: 15, message: '英雄池数量不足15个' },
     { max: 30, message: '英雄池数量超过30个' },
+  ],
+  heroRules: [
+    { required: true, message: '请输入英雄池规则' },
+    {
+      validator: (value: { [key: string]: number }, callback) => {
+        const total = Object.values(value).reduce((prev, cur) => prev + cur, 0)
+        if (total < form.heroPoolNum) {
+          callback('英雄池数量不足')
+        } else if (total > form.heroPoolNum) {
+          callback('英雄池数量过多')
+        } else {
+          callback()
+        }
+      },
+    },
   ],
 }
 
@@ -167,15 +182,15 @@ const handleSubmit = async () => {
       playerList.splice(index, 1)
     }
     const roleHero = props.roleHero
-    props.roleList.forEach(role  => {
+    props.roleList.forEach(role => {
       const list = roleHero?.[role] || []
       const num = roleNum[role]
-      for(let i = 0; i < num; i++) {
+      for (let i = 0; i < num; i++) {
         const index = Math.floor(Math.random() * list.length)
         h1.push(list[index] + ' ' + role)
         list.splice(index, 1)
       }
-      for(let i = 0; i < num; i++) {
+      for (let i = 0; i < num; i++) {
         const index = Math.floor(Math.random() * list.length)
         h2.push(list[index] + ' ' + role)
         list.splice(index, 1)
@@ -202,6 +217,7 @@ const hero: ComputedRef<TransferItem[]> = computed(() => {
 :deep(.arco-transfer-view) {
   width: 300px;
 }
+
 .hero-transfer {
   :deep(.arco-transfer-view) {
     height: 500px;
