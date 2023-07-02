@@ -1,7 +1,7 @@
 <template>
   <a-descriptions :column="1" title="英雄列表">
     <a-descriptions-item v-for="item of data" :key="item.label" :label="item.label">
-      <a-tag color="purple">{{ item.value }}</a-tag>
+      <a-tag color="arcoblue">{{ item.value }}</a-tag>
     </a-descriptions-item>
   </a-descriptions>
   <div v-if="heroList">
@@ -57,9 +57,9 @@ const emit = defineEmits<{
 }>()
 
 const colorMap: { [key: string]: string } = {
-  法师: 'red',
+  法师: 'pinkpurple',
   战士: 'orange',
-  坦克: 'green',
+  坦克: 'orangered',
   刺客: 'cyan',
   射手: 'purple',
 }
