@@ -11,6 +11,7 @@
         :data="playerInfoData"
         placeholder="请输入玩家名称"
         allow-clear
+        @keyup.enter="handleSubmit"
       />
     </a-form-item>
     <a-form-item>
@@ -78,6 +79,7 @@ const handleSubmit = async () => {
       localStorage.setItem('playerInfo', JSON.stringify(props.playerInfo))
       Message.success('添加成功')
     }
+    form.name = ''
     emit('success')
   }
 }
