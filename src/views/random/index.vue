@@ -34,7 +34,7 @@ export interface HeroList {
   version: string,
 }
 
-const roleList = ['法师', '战士', '坦克', '刺客', '辅助', '射手']
+const roleList = ['法师', '战士', '坦克', '刺客', '射手']
 
 export type RoleHero = {
   [key: string]: string[];
