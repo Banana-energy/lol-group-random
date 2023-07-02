@@ -24,10 +24,7 @@ defineOptions({
 })
 
 export type HeroAttrs = {
-  heroId: string;
   name: string;
-  title: string;
-  keywords: string;
   roles: string[];
 }
 
@@ -38,7 +35,6 @@ export interface HeroList {
 }
 
 const roleList = ['法师', '战士', '坦克', '刺客', '辅助', '射手']
-const roleEnList = ['mage', 'fighter', 'tank', 'assassin', 'support', 'marksman']
 
 export type RoleHero = {
   [key: string]: string[];
@@ -56,11 +52,10 @@ const playerInfo: Ref<PlayerInfo[] | undefined> = ref([])
 
 const getHero = async () => {
   heroList.value = (await import('@/assets/hero-list.json')).default
-  roleHero.value = roleEnList.reduce((pre, role, index)=> ({
+  roleHero.value = roleList.reduce((pre, role, index)=> ({
     ...pre,
     [roleList[index]]: heroList.value?.hero.filter(item => item.roles.includes(role)).map(item => {
-      item.roles = item.roles.map(role => roleList[roleEnList.indexOf(role)])
-      return item.name + '-' + item.title + `(${item.roles})`
+      return item.name + `(${item.roles})`
     }) || []
   }), {})
 }

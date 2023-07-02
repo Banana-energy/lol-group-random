@@ -5,8 +5,8 @@
     </a-descriptions-item>
   </a-descriptions>
   <a-list v-if="heroList?.hero.length" :max-height="660">
-    <a-list-item v-for="item in heroList.hero" :key="item.heroId">
-      <a-list-item-meta :description="item.keywords" :title="item.name + '-' + item.title" />
+    <a-list-item v-for="item in heroList.hero" :key="item.name">
+      <a-list-item-meta :description="item.roles.join(',')" />
     </a-list-item>
   </a-list>
 </template>

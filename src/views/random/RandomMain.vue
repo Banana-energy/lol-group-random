@@ -152,6 +152,37 @@ const form = reactive<Form>({
   },
 })
 
+watch(() => form.model, (val) => {
+  if(val === 5) {
+    form.heroPoolNum = 15
+    form.heroRules = {
+      战士: 4,
+      法师: 5,
+      坦克: 2,
+      刺客: 2,
+      射手: 2,
+    }
+  } else if (val === 4) {
+    form.heroPoolNum = 12
+    form.heroRules = {
+      战士: 3,
+      法师: 4,
+      坦克: 2,
+      刺客: 2,
+      射手: 1,
+    }
+  } else if (val === 3) {
+    form.heroPoolNum = 9
+    form.heroRules = {
+      战士: 2,
+      法师: 3,
+      坦克: 2,
+      刺客: 1,
+      射手: 1,
+    }
+  }
+})
+
 const playerDisabled = computed(() => {
   return form.playerList.length >= form.model * 2
 })
