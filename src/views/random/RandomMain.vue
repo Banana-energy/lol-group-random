@@ -192,6 +192,9 @@ const team2 = ref<string[]>([])
 const hero1 = ref<string[]>([])
 const hero2 = ref<string[]>([])
 
+const team = ref<TransferItem[]>([])
+const hero = ref<TransferItem[]>([])
+
 const handleSubmit = async () => {
   const valid = await formRef.value?.validate()
   if (valid === undefined) {
@@ -234,12 +237,12 @@ const handleSubmit = async () => {
   }
 }
 
-const team: ComputedRef<TransferItem[]> = computed(() => {
-  return team1.value.concat(team2.value).map(item => ({ value: item, label: item, disabled: false }))
+watch(() => team1.value, () => {
+  team.value = team1.value.concat(team2.value).map(item => ({ value: item, label: item, disabled: false }))
 })
 
-const hero: ComputedRef<TransferItem[]> = computed(() => {
-  return hero1.value.concat(hero2.value).map(item => ({ value: item, label: item, disabled: false }))
+watch(() => hero1.value, () => {
+  hero.value = hero1.value.concat(hero2.value).map(item => ({ value: item, label: item, disabled: false }))
 })
 
 </script>
