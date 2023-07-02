@@ -44,7 +44,7 @@
 import RandomMain from './RandomMain.vue';
 import AddPlayer from './AddPlayer.vue';
 import GetHeroList from './GetHeroList.vue';
-import { IconDelete } from '@arco-design/web-vue/es/Icon';
+import { IconDelete } from '@arco-design/web-vue/es/icon';
 
 defineOptions({
   name: 'RandomGroup',
