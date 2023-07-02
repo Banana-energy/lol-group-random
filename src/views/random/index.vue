@@ -8,7 +8,7 @@
         <add-player :player-info="playerInfo" @success="getPlayerInfo" />
       </a-tab-pane>
       <a-tab-pane key="3" title="英雄列表">
-        <get-hero-list :hero-list="heroList" />
+        <get-hero-list :hero-list="heroList" @success="(val) => heroList = val" />
       </a-tab-pane>
     </a-tabs>
   </div>
