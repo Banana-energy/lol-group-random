@@ -32,27 +32,20 @@
         placeholder="请输入英雄池数量"
       />
     </a-form-item>
-    <a-form-item field="heroPool" label="英雄池">
-      <template #label>
-        <div class="flex whitespace-nowrap items-center">
-          <span>英雄池</span>
-          <span class="text-red-500 ml-2">
-            已选({{ form.heroPool.length }})
-          </span>
-          <span class="text-red-500 ml-2">
-            至少需要({{ form.heroPoolNum * 2 }})
-          </span>
-        </div>
-      </template>
-      <a-scrollbar class="max-h-md overflow-auto">
-        <a-checkbox-group v-if="heroPoolOptions.length" v-model="form.heroPool">
-          <a-grid :col-gap="24" :cols="4" :row-gap="16">
-            <a-grid-item v-for="item in heroPoolOptions" :key="item" class="whitespace-nowrap">
-              <a-checkbox :value="item">{{ item }}</a-checkbox>
-            </a-grid-item>
-          </a-grid>
-        </a-checkbox-group>
-      </a-scrollbar>
+    <a-form-item class="!mb-0" label="英雄池规则">
+      <a-form-item
+        v-for="item in roleList"
+        :key="item"
+        :label="item"
+        class="m-2"
+      >
+        <a-input-number
+          v-model="form.heroRules[item]"
+          :max="5"
+          :min="1"
+          placeholder="请输入数量"
+        />
+      </a-form-item>
     </a-form-item>
     <a-form-item>
       <a-button type="primary" @click="handleSubmit">
@@ -78,30 +71,18 @@
 
 <script setup lang="ts">
 import { FormInstance, FieldRule } from '@arco-design/web-vue';
-import { PlayerInfo } from './index.vue';
+import { PlayerInfo,RoleHero } from './index.vue';
 import { TransferItem } from '@arco-design/web-vue/es/transfer/interface';
 
 const props = defineProps<{
   playerInfo?: PlayerInfo[];
+  roleHero?: RoleHero;
+  roleList: string[];
 }>()
 
 const formRef = ref<FormInstance>()
 
 const playerOptions = computed(() => props.playerInfo?.map(item => ({ label: item.name, value: item.name })) ?? [])
-
-const heroPoolOptions = computed(() => {
-  const set = new Set<string>()
-  props.playerInfo?.forEach(item => {
-    item.heroPool.forEach(hero => {
-      set.add(hero)
-    })
-  })
-  return [...set]
-})
-
-watch(() => props.playerInfo, () => {
-  form.heroPool = heroPoolOptions.value.map(item => item)
-})
 
 interface Rules {
   [key: string]: FieldRule[]
@@ -131,25 +112,29 @@ const rules: Rules = {
     { min: 15, message: '英雄池数量不足15个' },
     { max: 30, message: '英雄池数量超过30个' },
   ],
-  heroPool: [
-    { required: true, message: '英雄池数量为0' },
-    {
-      validator: (value, callback) => {
-        if (value.length < form.heroPoolNum * 2) {
-          callback(`英雄池数量不足${form.heroPoolNum * 2}个`)
-        } else {
-          callback()
-        }
-      },
-    }
-  ],
 }
 
-const form = reactive({
+interface Form {
+  model: number;
+  playerList: string[];
+  heroPoolNum: number;
+  heroRules: {
+    [key: string]: number;
+  };
+}
+
+const form = reactive<Form>({
   model: 5,
   playerList: [],
   heroPoolNum: 15,
-  heroPool: heroPoolOptions.value.map(item => item),
+  heroRules: {
+    战士: 4,
+    法师: 2,
+    坦克: 2,
+    刺客: 4,
+    辅助: 1,
+    射手: 2,
+  },
 })
 
 const playerDisabled = computed(() => {
@@ -165,11 +150,12 @@ const handleSubmit = async () => {
   const valid = await formRef.value?.validate()
   if (valid === undefined) {
     const playerList = form.playerList.map(item => item)
-    const heroPool = form.heroPool.map(item => item)
+    // 根据规则随机分配队伍及队伍英雄，规则为 role为 mage 2个，fighter 4个，tank 2个， assassin 4个，support 1个，marksman 2个
     const t1: string[] = []
     const t2: string[] = []
     const h1: string[] = []
     const h2: string[] = []
+    const roleNum = form.heroRules
     for (let i = 0; i < form.model; i++) {
       const index = Math.floor(Math.random() * playerList.length)
       t1.push(playerList[index])
@@ -180,16 +166,21 @@ const handleSubmit = async () => {
       t2.push(playerList[index])
       playerList.splice(index, 1)
     }
-    for (let i = 0; i < form.heroPoolNum; i++) {
-      const index = Math.floor(Math.random() * heroPool.length)
-      h1.push(heroPool[index])
-      heroPool.splice(index, 1)
-    }
-    for (let i = 0; i < form.heroPoolNum; i++) {
-      const index = Math.floor(Math.random() * heroPool.length)
-      h2.push(heroPool[index])
-      heroPool.splice(index, 1)
-    }
+    const roleHero = props.roleHero
+    props.roleList.forEach(role  => {
+      const list = roleHero?.[role] || []
+      const num = roleNum[role]
+      for(let i = 0; i < num; i++) {
+        const index = Math.floor(Math.random() * list.length)
+        h1.push(list[index] + ' ' + role)
+        list.splice(index, 1)
+      }
+      for(let i = 0; i < num; i++) {
+        const index = Math.floor(Math.random() * list.length)
+        h2.push(list[index] + ' ' + role)
+        list.splice(index, 1)
+      }
+    })
     team1.value = t1
     team2.value = t2
     hero1.value = h1
@@ -208,6 +199,9 @@ const hero: ComputedRef<TransferItem[]> = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+:deep(.arco-transfer-view) {
+  width: 300px;
+}
 .hero-transfer {
   :deep(.arco-transfer-view) {
     height: 500px;
