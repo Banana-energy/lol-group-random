@@ -17,11 +17,7 @@
         <span>玩家选择</span>
         <span v-if="!playerOptions.length" class="text-red-500">（请先添加玩家）</span>
       </template>
-      <a-checkbox-group
-        v-if="playerOptions.length"
-        v-model="form.playerList"
-        :options="playerOptions"
-      />
+      <a-checkbox-group v-if="playerOptions.length" v-model="form.playerList" :options="playerOptions" />
     </a-form-item>
     <a-form-item field="heroPoolNum" label="英雄池数量">
       <a-input-number
@@ -151,7 +147,7 @@ const form = reactive<Form>({
 })
 
 watch(() => form.model, (val) => {
-  if(val === 5) {
+  if (val === 5) {
     form.heroPoolNum = 15
     form.heroRules = {
       战士: 4,
@@ -192,7 +188,7 @@ const hero = ref<TransferItem[]>([])
 const handleSubmit = async () => {
   const valid = await formRef.value?.validate()
   if (valid === undefined) {
-    const playerList = form.playerList.map(item => item)
+    let playerList = form.playerList.map(item => item)
     // 根据规则随机分配队伍及队伍英雄，规则为 role为 mage 2个，fighter 4个，tank 2个， assassin 4个，support 1个，marksman 2个
     const t1: string[] = []
     const t2: string[] = []
@@ -200,50 +196,90 @@ const handleSubmit = async () => {
     const h2: string[] = []
     const roleNum = form.heroRules
     for (let i = 0; i < form.model; i++) {
-      let index = Math.floor(Math.random() * playerList.length)
+      playerList = playerList.filter(item => item)
+      const index = Math.floor(Math.random() * playerList.length)
       const player = playerList[index]
-      const playerInfo = props.playerInfo?.find(item => item.name === player)
-      if(playerInfo?.bindPlayers.length) {
-        const bindPlayers = playerInfo.bindPlayers
-        bindPlayers.forEach(item => {
-          const bindIndex = playerList.findIndex(e => e === item)
-          if(bindIndex !== -1) {
-            t1.push(item)
-            i++
-            playerList.splice(bindIndex, 1)
-          }
-        })
+      if (player === '猪猫') {
+        if(!t1.includes('阿靓') && i < form.model - 1) {
+          const bindPlayerIndex = playerList.findIndex(item => item === '阿靓')
+          t1.push('阿靓')
+          playerList[bindPlayerIndex] = ''
+          i++
+          t1.push(player)
+          playerList[index] = ''
+          continue
+        } else if (t1.includes('阿靓') && i < form.model - 1) {
+          t1.push(player)
+          playerList[index] = ''
+          continue
+        } else {
+          i--
+          continue
+        }
+      }
+      if (player === '阿靓') {
+        if(!t1.includes('猪猫') && i < form.model - 1) {
+          const bindPlayerIndex = playerList.findIndex(item => item === '猪猫')
+          i++
+          t1.push('猪猫')
+          playerList[bindPlayerIndex] = ''
+          t1.push(player)
+          playerList[index] = ''
+          continue
+        } else if (t1.includes('猪猫') && i < form.model - 1) {
+          t1.push(player)
+          playerList[index] = ''
+          continue
+        } else {
+          i--
+          continue
+        }
       }
       t1.push(player)
-      index = playerList.findIndex(item => item === player)
-      playerList.splice(index, 1)
-    }
-    if(t1.length > form.model) {
-      handleSubmit()
-      return
+      playerList[index] = ''
     }
     for (let i = 0; i < form.model; i++) {
-      let index = Math.floor(Math.random() * playerList.length)
+      playerList = playerList.filter(item => item)
+      const index = Math.floor(Math.random() * playerList.length)
       const player = playerList[index]
-      const playerInfo = props.playerInfo?.find(item => item.name === player)
-      if(playerInfo?.bindPlayers.length) {
-        const bindPlayers = playerInfo.bindPlayers
-        bindPlayers.forEach(item => {
-          const bindIndex = playerList.findIndex(e => e === item)
-          if(bindIndex !== -1) {
-            t2.push(item)
-            i++
-            playerList.splice(bindIndex, 1)
-          }
-        })
+      if (player === '猪猫') {
+        if(!t2.includes('阿靓') && i < form.model - 1) {
+          const bindPlayerIndex = playerList.findIndex(item => item === '阿靓')
+          t2.push('阿靓')
+          playerList[bindPlayerIndex] = ''
+          i++
+          t2.push(player)
+          playerList[index] = ''
+          continue
+        } else if (t2.includes('阿靓') && i < form.model - 1) {
+          t2.push(player)
+          playerList[index] = ''
+          continue
+        } else {
+          i--
+          continue
+        }
       }
-      t2.push(playerList[index])
-      index = playerList.findIndex(item => item === player)
-      playerList.splice(index, 1)
-    }
-    if(t2.length > form.model) {
-      handleSubmit()
-      return
+      if (player === '阿靓') {
+        if(!t2.includes('猪猫') && i < form.model - 1) {
+          const bindPlayerIndex = playerList.findIndex(item => item === '猪猫')
+          i++
+          t2.push('猪猫')
+          playerList[bindPlayerIndex] = ''
+          t2.push(player)
+          playerList[index] = ''
+          continue
+        } else if (t2.includes('猪猫') && i < form.model - 1) {
+          t2.push(player)
+          playerList[index] = ''
+          continue
+        } else {
+          i--
+          continue
+        }
+      }
+      t2.push(player)
+      playerList[index] = ''
     }
     const roleHero = props.roleHero
     props.roleList.forEach(role => {
