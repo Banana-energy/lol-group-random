@@ -20,7 +20,6 @@
       <a-checkbox-group
         v-if="playerOptions.length"
         v-model="form.playerList"
-        :disabled="playerDisabled"
         :options="playerOptions"
       />
     </a-form-item>
@@ -144,10 +143,9 @@ const form = reactive<Form>({
   heroPoolNum: 15,
   heroRules: {
     战士: 4,
-    法师: 2,
+    法师: 5,
     坦克: 2,
-    刺客: 4,
-    辅助: 1,
+    刺客: 2,
     射手: 2,
   },
 })
@@ -183,10 +181,6 @@ watch(() => form.model, (val) => {
   }
 })
 
-const playerDisabled = computed(() => {
-  return form.playerList.length >= form.model * 2
-})
-
 const team1 = ref<string[]>([])
 const team2 = ref<string[]>([])
 const hero1 = ref<string[]>([])
@@ -206,18 +200,54 @@ const handleSubmit = async () => {
     const h2: string[] = []
     const roleNum = form.heroRules
     for (let i = 0; i < form.model; i++) {
-      const index = Math.floor(Math.random() * playerList.length)
-      t1.push(playerList[index])
+      let index = Math.floor(Math.random() * playerList.length)
+      const player = playerList[index]
+      const playerInfo = props.playerInfo?.find(item => item.name === player)
+      if(playerInfo?.bindPlayers.length) {
+        const bindPlayers = playerInfo.bindPlayers
+        bindPlayers.forEach(item => {
+          const bindIndex = playerList.findIndex(e => e === item)
+          if(bindIndex !== -1) {
+            t1.push(item)
+            i++
+            playerList.splice(bindIndex, 1)
+          }
+        })
+      }
+      t1.push(player)
+      index = playerList.findIndex(item => item === player)
       playerList.splice(index, 1)
     }
+    if(t1.length > form.model) {
+      handleSubmit()
+      return
+    }
     for (let i = 0; i < form.model; i++) {
-      const index = Math.floor(Math.random() * playerList.length)
+      let index = Math.floor(Math.random() * playerList.length)
+      const player = playerList[index]
+      const playerInfo = props.playerInfo?.find(item => item.name === player)
+      if(playerInfo?.bindPlayers.length) {
+        const bindPlayers = playerInfo.bindPlayers
+        bindPlayers.forEach(item => {
+          const bindIndex = playerList.findIndex(e => e === item)
+          if(bindIndex !== -1) {
+            t2.push(item)
+            i++
+            playerList.splice(bindIndex, 1)
+          }
+        })
+      }
       t2.push(playerList[index])
+      index = playerList.findIndex(item => item === player)
       playerList.splice(index, 1)
+    }
+    if(t2.length > form.model) {
+      handleSubmit()
+      return
     }
     const roleHero = props.roleHero
     props.roleList.forEach(role => {
-      const list = roleHero?.[role] || []
+      const list = roleHero?.[role].slice() || []
       const num = roleNum[role]
       for (let i = 0; i < num; i++) {
         const index = Math.floor(Math.random() * list.length)

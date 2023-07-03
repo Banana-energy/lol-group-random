@@ -42,6 +42,7 @@ export type RoleHero = {
 
 export interface PlayerInfo {
   name: string;
+  bindPlayers: string[];
 }
 
 const activeKey = ref('1')
