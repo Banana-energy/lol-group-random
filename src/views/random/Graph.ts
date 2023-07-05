@@ -57,6 +57,7 @@ lightColors.forEach((lcolor, i) => {
 export default class PlayerGraph {
   container?: HTMLElement;
   graph: Graph | null = null;
+  toolbar;
   constructor(container?: HTMLElement) {
     if (!container) {
       return
@@ -64,7 +65,7 @@ export default class PlayerGraph {
     this.container = container;
     const width = container.scrollWidth;
     const height = container.scrollHeight || 500;
-    const toolbar = new G6.ToolBar({
+    this.toolbar = new G6.ToolBar({
       position: { x: 10, y: 150 },
     });
     this.graph = new G6.Graph({
@@ -73,7 +74,7 @@ export default class PlayerGraph {
       fitViewPadding: 20,
       width,
       height,
-      plugins: [toolbar],
+      plugins: [this.toolbar],
       enabledStack: true,
       layout: {
         type: 'circular',
@@ -82,13 +83,13 @@ export default class PlayerGraph {
         preventOverlap: true,
       },
       modes: {
-        default:[{
+        default: [{
           type: 'create-edge',
           trigger: 'click',
           shouldBegin: (e: IG6GraphEvent) => {
-            if(e.item && e.item instanceof Node) {
+            if (e.item && e.item instanceof Node) {
               const length = e.item.getEdges().length;
-              if(length >= 2) {
+              if (length >= 2) {
                 Message.error(`${e.item.getModel().label}已绑定两人`);
                 return false;
               }
@@ -97,9 +98,9 @@ export default class PlayerGraph {
             return false;
           },
           shouldEnd: (e: IG6GraphEvent) => {
-            if(e.item && e.item instanceof Node) {
+            if (e.item && e.item instanceof Node) {
               const length = e.item.getEdges().length;
-              if(length >= 2) {
+              if (length >= 2) {
                 Message.error(`${e.item.getModel().label}已被两人绑定`);
                 return false;
               }

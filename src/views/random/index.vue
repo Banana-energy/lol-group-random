@@ -5,7 +5,7 @@
         <random-main :player-info="playerInfo" :role-hero="roleHero" :role-list="roleList" />
       </a-tab-pane>
       <a-tab-pane key="2" title="添加玩家">
-        <add-player :player-info="playerInfo" @success="getPlayerInfo" />
+        <add-player :active-key="activeKey" :player-info="playerInfo" @success="getPlayerInfo" />
       </a-tab-pane>
       <a-tab-pane key="3" title="英雄列表">
         <get-hero-list :hero-list="heroList" @success="(val) => heroList = val" />

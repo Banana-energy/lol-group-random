@@ -25,6 +25,7 @@ import { Rules } from './RandomMain.vue';
 
 const props = defineProps<{
   playerInfo: GraphData;
+  activeKey: string;
 }>()
 
 const emit = defineEmits<{
@@ -109,6 +110,22 @@ onMounted(() => {
       Message.success('绑定成功')
     }
   });
+})
+
+watch(() => props.activeKey, (val) => {
+  if (val === '2') {
+    if (graph.toolbar) {
+      graph.toolbar.init()
+      graph.toolbar.destroyed = false
+    }
+  } else {
+    if (graph.toolbar) {
+      if (!graph.toolbar.destroyed) {
+        graph.toolbar.destroy()
+        graph.toolbar.destroyed = true
+      }
+    }
+  }
 })
 
 </script>
