@@ -66,20 +66,23 @@
 
 <script setup lang="ts">
 import { FormInstance, FieldRule } from '@arco-design/web-vue';
-import { PlayerInfo, RoleHero } from './index.vue';
+import { RoleHero } from './index.vue';
 import { TransferItem } from '@arco-design/web-vue/es/transfer/interface';
+import { GraphData } from '@antv/g6';
 
 const props = defineProps<{
-  playerInfo?: PlayerInfo[];
+  playerInfo?: GraphData;
   roleHero?: RoleHero;
   roleList: string[];
 }>()
 
 const formRef = ref<FormInstance>()
 
-const playerOptions = computed(() => props.playerInfo?.map(item => ({ label: item.name, value: item.name })) ?? [])
+const playerOptions = computed(() => {
+  return props.playerInfo?.nodes?.map(item => ({ label: item.id, value: item.id })) || []
+})
 
-interface Rules {
+export interface Rules {
   [key: string]: FieldRule[]
 }
 

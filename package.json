@@ -10,6 +10,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@antv/g6": "^4.8.17",
     "@iconify-json/vscode-icons": "^1.1.25",
     "@iconify/vue": "^4.1.1",
     "@vueuse/core": "^9.13.0",

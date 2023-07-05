@@ -18,6 +18,7 @@
 import RandomMain from './RandomMain.vue';
 import AddPlayer from './AddPlayer.vue';
 import GetHeroList from './GetHeroList.vue';
+import { GraphData } from '@antv/g6';
 
 defineOptions({
   name: 'RandomGroup',
@@ -40,16 +41,11 @@ export type RoleHero = {
   [key: string]: string[];
 };
 
-export interface PlayerInfo {
-  name: string;
-  bindPlayers: string[];
-}
-
 const activeKey = ref('1')
 
 const heroList: Ref<HeroList | null> = ref(null)
 const roleHero: Ref<RoleHero | undefined> = ref(undefined)
-const playerInfo: Ref<PlayerInfo[] | undefined> = ref([])
+const playerInfo: Ref<GraphData> = ref({})
 
 const getHero = async () => {
   heroList.value = (await import('@/assets/hero-list.json')).default
@@ -64,7 +60,13 @@ const getHero = async () => {
 const getPlayerInfo = () => {
   const storePlayerInfo = localStorage.getItem('playerInfo')
   if (storePlayerInfo) {
-    playerInfo.value = JSON.parse(storePlayerInfo) as PlayerInfo[]
+    playerInfo.value = JSON.parse(storePlayerInfo) as GraphData
+  } else {
+    playerInfo.value = {
+      nodes: [],
+      edges: [],
+    }
+    localStorage.setItem('playerInfo', JSON.stringify(playerInfo.value))
   }
 }
 getPlayerInfo()
