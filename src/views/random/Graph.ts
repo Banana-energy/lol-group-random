@@ -1,5 +1,5 @@
-import G6, { Graph, IG6GraphEvent, GraphData, Node } from '@antv/g6';
-import { Message } from '@arco-design/web-vue';
+import G6, { Graph, IG6GraphEvent, GraphData, Node, Edge } from '@antv/g6';
+import { MenuInstance, Message } from '@arco-design/web-vue';
 
 const lightColors = [
   '#8FE9FF',
@@ -58,7 +58,7 @@ export default class PlayerGraph {
   container?: HTMLElement;
   graph: Graph | null = null;
   toolbar;
-  constructor(container?: HTMLElement) {
+  constructor(container?: HTMLElement, contextmenu?: MenuInstance) {
     if (!container) {
       return
     }
@@ -68,13 +68,35 @@ export default class PlayerGraph {
     this.toolbar = new G6.ToolBar({
       position: { x: 10, y: 150 },
     });
+    const menu = new G6.Menu({
+      getContent() {
+        return contextmenu?.$el
+      },
+      handleMenuClick: (target, item) => {
+        const isNode = item instanceof Node;
+        if (target.innerText === '删除') {
+          // TODO: 删除节点
+          if (isNode) {
+            const edges = item.getEdges();
+            const length = edges.length;
+            for(let i = 0; i < length; i++) {
+              const edge = edges[i];
+              this.graph?.removeItem(edge);
+            }
+          }
+          Message.success('删除成功');
+          this.graph?.removeItem(item)
+        }
+      },
+      itemTypes: ['node', 'edge'],
+    })
     this.graph = new G6.Graph({
       container: container,
       fitView: true,
       fitViewPadding: 20,
       width,
       height,
-      plugins: [this.toolbar],
+      plugins: [this.toolbar, menu],
       enabledStack: true,
       layout: {
         type: 'circular',
@@ -113,7 +135,7 @@ export default class PlayerGraph {
       defaultEdge: {
         style: {
           stroke: '#bae7ff',
-          lineWidth: 2,
+          lineWidth: 4,
         }
       }
     })

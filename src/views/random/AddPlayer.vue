@@ -15,12 +15,17 @@
     </a-form-item>
   </a-form>
   <div ref="container" class="w-full h-lg mt-4"></div>
+  <a-menu v-if="showMenu" ref="contextmenu" :default-open-keys="['0']">
+    <a-menu-item key="0_0_0" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
+      删除
+    </a-menu-item>
+  </a-menu>
 </template>
 
 <script setup lang="ts">
 import G6, { EdgeConfig, GraphData } from '@antv/g6';
 import PlayerGraph, { gColors } from './Graph';
-import { FormInstance, Message } from '@arco-design/web-vue';
+import { FormInstance, MenuInstance, Message } from '@arco-design/web-vue';
 import { Rules } from './RandomMain.vue';
 
 const props = defineProps<{
@@ -88,10 +93,12 @@ const handleSubmit = async () => {
 }
 
 const container = ref<HTMLDivElement>()
+const contextmenu = ref<MenuInstance>()
 
 let graph: PlayerGraph
+const showMenu = ref(true)
 onMounted(() => {
-  graph = new PlayerGraph(container.value)
+  graph = new PlayerGraph(container.value, contextmenu.value)
   graph.render(props.playerInfo)
 
   graph.graph?.on('aftercreateedge', () => {
@@ -110,6 +117,16 @@ onMounted(() => {
       Message.success('绑定成功')
     }
   });
+  graph.graph?.on('afterremoveitem', () => {
+    const data = graph.graph?.save() as GraphData
+    if (data) {
+      props.playerInfo.edges = data.edges
+      props.playerInfo.nodes = data.nodes
+      localStorage.setItem('playerInfo', JSON.stringify(props.playerInfo))
+      emit('success')
+    }
+  })
+  showMenu.value = false
 })
 
 watch(() => props.activeKey, (val) => {
@@ -129,3 +146,10 @@ watch(() => props.activeKey, (val) => {
 })
 
 </script>
+
+<style scoped>
+:deep(.g6-component-contextmenu) {
+  width: 120px;
+  padding: 5px 0;
+}
+</style>

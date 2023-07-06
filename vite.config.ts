@@ -7,6 +7,7 @@ import { ArcoResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import WindiCSS from "vite-plugin-windicss";
+import VueJSX from "@vitejs/plugin-vue-jsx";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -20,6 +21,7 @@ export default defineConfig(({ mode }) => {
       sourcemap: !isProd,
     },
     plugins: [
+      VueJSX(),
       WindiCSS(),
       AutoImport({
         dts: "src/types/auto-import.d.ts",
