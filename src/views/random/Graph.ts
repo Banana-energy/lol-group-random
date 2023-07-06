@@ -1,4 +1,4 @@
-import G6, { Graph, IG6GraphEvent, GraphData, Node, Edge } from '@antv/g6';
+import G6, { Graph, IG6GraphEvent, GraphData, Node } from '@antv/g6';
 import { MenuInstance, Message } from '@arco-design/web-vue';
 
 const lightColors = [
@@ -46,7 +46,7 @@ const uDarkColors = [
   '#CAFFF3',
 ];
 
-const unlightColorMap = new Map();
+const unlightColorMap: Map<string, string> = new Map();
 export const gColors: string[] = [];
 
 lightColors.forEach((lcolor, i) => {
@@ -75,11 +75,10 @@ export default class PlayerGraph {
       handleMenuClick: (target, item) => {
         const isNode = item instanceof Node;
         if (target.innerText === '删除') {
-          // TODO: 删除节点
           if (isNode) {
             const edges = item.getEdges();
             const length = edges.length;
-            for(let i = 0; i < length; i++) {
+            for (let i = 0; i < length; i++) {
               const edge = edges[i];
               this.graph?.removeItem(edge);
             }
