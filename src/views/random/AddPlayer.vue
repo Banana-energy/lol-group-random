@@ -19,16 +19,25 @@
     <a-menu-item key="0_0_0" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
       删除
     </a-menu-item>
+    <a-divider :margin="5" />
+    <a-menu-item key="0_0_1" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
+      绑定
+    </a-menu-item>
+    <a-divider :margin="5" />
+    <a-menu-item key="0_0_2" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
+      敌对
+    </a-menu-item>
   </a-menu>
 </template>
 
 <script setup lang="ts">
-import G6, { EdgeConfig, GraphData } from '@antv/g6';
+import G6, { Algorithm, EdgeConfig, GraphData, NodeConfig } from '@antv/g6';
 import PlayerGraph, { gColors } from './Graph';
 import { FormInstance, MenuInstance, Message } from '@arco-design/web-vue';
 import { Rules } from './RandomMain.vue';
 
 const props = defineProps<{
+  bindGraph: NodeConfig[][];
   playerInfo: GraphData;
   activeKey: string;
 }>()
@@ -99,6 +108,7 @@ let graph: PlayerGraph
 const showMenu = ref(true)
 onMounted(() => {
   graph = new PlayerGraph(container.value, contextmenu.value)
+  PlayerGraph.bindGraph = props.bindGraph
   graph.render(props.playerInfo)
 
   graph.graph?.on('aftercreateedge', () => {
@@ -122,6 +132,9 @@ onMounted(() => {
     if (data) {
       props.playerInfo.edges = data.edges
       props.playerInfo.nodes = data.nodes
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      PlayerGraph.bindGraph = Algorithm.connectedComponent(props.playerInfo)
       localStorage.setItem('playerInfo', JSON.stringify(props.playerInfo))
       emit('success')
     }

@@ -2,10 +2,20 @@
   <div class="flex justify-center p-5">
     <a-tabs v-model:active-key="activeKey" class="max-w-screen-lg" lazy-load>
       <a-tab-pane key="1" title="随机分组">
-        <random-main :player-info="playerInfo" :role-hero="roleHero" :role-list="roleList" />
+        <random-main
+          :bind-graph="bindGraph"
+          :player-info="playerInfo"
+          :role-hero="roleHero"
+          :role-list="roleList"
+        />
       </a-tab-pane>
       <a-tab-pane key="2" title="添加玩家">
-        <add-player :active-key="activeKey" :player-info="playerInfo" @success="getPlayerInfo" />
+        <add-player
+          :active-key="activeKey"
+          :bind-graph="bindGraph"
+          :player-info="playerInfo"
+          @success="getPlayerInfo"
+        />
       </a-tab-pane>
       <a-tab-pane key="3" title="英雄列表">
         <get-hero-list :hero-list="heroList" @success="(val) => heroList = val" />
@@ -18,7 +28,7 @@
 import RandomMain from './RandomMain.vue';
 import AddPlayer from './AddPlayer.vue';
 import GetHeroList from './GetHeroList.vue';
-import { GraphData } from '@antv/g6';
+import { GraphData, Algorithm, NodeConfig } from '@antv/g6';
 
 defineOptions({
   name: 'RandomGroup',
@@ -49,13 +59,19 @@ const playerInfo: Ref<GraphData> = ref({})
 
 const getHero = async () => {
   heroList.value = (await import('@/assets/hero-list.json')).default
-  roleHero.value = roleList.reduce((pre, role, index)=> ({
+  roleHero.value = roleList.reduce((pre, role, index) => ({
     ...pre,
     [roleList[index]]: heroList.value?.hero.filter(item => item.roles.includes(role)).map(item => {
       return item.name + `(${item.roles})`
     }) || []
   }), {})
 }
+
+const bindGraph = computed<NodeConfig[][]>(() => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return Algorithm.connectedComponent(playerInfo.value)
+})
 
 const getPlayerInfo = () => {
   const storePlayerInfo = localStorage.getItem('playerInfo')

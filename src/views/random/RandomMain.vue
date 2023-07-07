@@ -43,34 +43,62 @@
       </a-form-item>
     </a-form-item>
     <a-form-item>
-      <a-button type="primary" @click="handleSubmit">
+      <a-button type="primary" long @click="handleSubmit">
         确定
       </a-button>
     </a-form-item>
   </a-form>
-  <a-transfer
-    v-model:model-value="team2"
-    :data="team"
-    :title="['队伍一', '队伍二']"
-    class="player-transfer"
-    show-search
-  />
-  <a-transfer
-    v-model:model-value="hero2"
-    :data="hero"
-    :title="['队伍一英雄', '队伍二英雄']"
-    class="mt-5 hero-transfer"
-    show-search
-  />
+  <a-list :bordered="false" :grid-props="{ gutter: 0, xs: 24, sm: 12, md: 12, lg: 6, xl: 6 }">
+    <a-list-item>
+      <a-list size="small">
+        <template #header>
+          队伍一
+        </template>
+        <a-list-item v-for="item in team1" :key="item">
+          {{ item }}
+        </a-list-item>
+      </a-list>
+    </a-list-item>
+    <a-list-item>
+      <a-list size="small">
+        <template #header>
+          队伍二
+        </template>
+        <a-list-item v-for="item in team2" :key="item">
+          {{ item }}
+        </a-list-item>
+      </a-list>
+    </a-list-item>
+    <a-list-item>
+      <a-list size="small">
+        <template #header>
+          队伍一英雄
+        </template>
+        <a-list-item v-for="item in hero1" :key="item">
+          {{ item }}
+        </a-list-item>
+      </a-list>
+    </a-list-item>
+    <a-list-item>
+      <a-list size="small">
+        <template #header>
+          队伍二英雄
+        </template>
+        <a-list-item v-for="item in hero2" :key="item">
+          {{ item }}
+        </a-list-item>
+      </a-list>
+    </a-list-item>
+  </a-list>
 </template>
 
 <script setup lang="ts">
 import { FormInstance, FieldRule } from '@arco-design/web-vue';
 import { RoleHero } from './index.vue';
-import { TransferItem } from '@arco-design/web-vue/es/transfer/interface';
-import { GraphData } from '@antv/g6';
+import { GraphData, NodeConfig } from '@antv/g6';
 
 const props = defineProps<{
+  bindGraph: NodeConfig[][];
   playerInfo?: GraphData;
   roleHero?: RoleHero;
   roleList: string[];
@@ -185,117 +213,66 @@ const team2 = ref<string[]>([])
 const hero1 = ref<string[]>([])
 const hero2 = ref<string[]>([])
 
-const team = ref<TransferItem[]>([])
-const hero = ref<TransferItem[]>([])
+const random = (selectedPlayers: string[] = []) => {
+  let playerList = form.playerList.map(item => item).filter(item => !selectedPlayers.includes(item))
+  const team = []
+  for (let i = 0; i < form.model; i++) {
+    playerList = playerList.filter(item => item)
+    const index = Math.floor(Math.random() * playerList.length)
+    const player = playerList[index]
+    // 获取当前玩家的绑定玩家
+    const bindPlayers = props.bindGraph.find(nodes => nodes.find(node => node.id === player))
+    // 判断是否有绑定玩家
+    if (bindPlayers) {
+      if (bindPlayers.length === 1) {
+        // 如果只有一个绑定玩家(自己)则直接放入本队伍
+        team.push(player)
+        playerList[index] = ''
+      } else if (bindPlayers.length <= form.model - i) {
+        // 获取绑定玩家并过滤掉不在玩家列表中的玩家
+        const bindPlayersName = bindPlayers.map(item => item.id).filter(item => playerList.includes(item))
+        // 将绑定玩家放入本队伍
+        team.push(...bindPlayersName)
+        // 将绑定玩家从玩家列表中删除
+        bindPlayersName.forEach(item => {
+          const index = playerList.findIndex(player => player === item)
+          playerList[index] = ''
+        })
+        // 跳过绑定玩家的数量
+        i += bindPlayersName.length - 1
+        continue
+      } else {
+        i--
+      }
+    } else {
+      // 如果没有绑定玩家则随机分配
+      team.push(player)
+      playerList[index] = ''
+    }
+  }
+  return team
+}
 
 const handleSubmit = async () => {
   const valid = await formRef.value?.validate()
   if (valid === undefined) {
-    let playerList = form.playerList.map(item => item)
-    // 根据规则随机分配队伍及队伍英雄，规则为 role为 mage 2个，fighter 4个，tank 2个， assassin 4个，support 1个，marksman 2个
-    const t1: string[] = []
-    const t2: string[] = []
+    const t1: string[] = random()
+    const t2: string[] = random(t1)
     const h1: string[] = []
     const h2: string[] = []
     const roleNum = form.heroRules
-    for (let i = 0; i < form.model; i++) {
-      playerList = playerList.filter(item => item)
-      const index = Math.floor(Math.random() * playerList.length)
-      const player = playerList[index]
-      if (player === '猪猫') {
-        if(!t1.includes('阿靓') && i < form.model - 1) {
-          const bindPlayerIndex = playerList.findIndex(item => item === '阿靓')
-          t1.push('阿靓')
-          playerList[bindPlayerIndex] = ''
-          i++
-          t1.push(player)
-          playerList[index] = ''
-          continue
-        } else if (t1.includes('阿靓') && i < form.model - 1) {
-          t1.push(player)
-          playerList[index] = ''
-          continue
-        } else {
-          i--
-          continue
-        }
-      }
-      if (player === '阿靓') {
-        if(!t1.includes('猪猫') && i < form.model - 1) {
-          const bindPlayerIndex = playerList.findIndex(item => item === '猪猫')
-          i++
-          t1.push('猪猫')
-          playerList[bindPlayerIndex] = ''
-          t1.push(player)
-          playerList[index] = ''
-          continue
-        } else if (t1.includes('猪猫') && i < form.model - 1) {
-          t1.push(player)
-          playerList[index] = ''
-          continue
-        } else {
-          i--
-          continue
-        }
-      }
-      t1.push(player)
-      playerList[index] = ''
-    }
-    for (let i = 0; i < form.model; i++) {
-      playerList = playerList.filter(item => item)
-      const index = Math.floor(Math.random() * playerList.length)
-      const player = playerList[index]
-      if (player === '猪猫') {
-        if(!t2.includes('阿靓') && i < form.model - 1) {
-          const bindPlayerIndex = playerList.findIndex(item => item === '阿靓')
-          t2.push('阿靓')
-          playerList[bindPlayerIndex] = ''
-          i++
-          t2.push(player)
-          playerList[index] = ''
-          continue
-        } else if (t2.includes('阿靓') && i < form.model - 1) {
-          t2.push(player)
-          playerList[index] = ''
-          continue
-        } else {
-          i--
-          continue
-        }
-      }
-      if (player === '阿靓') {
-        if(!t2.includes('猪猫') && i < form.model - 1) {
-          const bindPlayerIndex = playerList.findIndex(item => item === '猪猫')
-          i++
-          t2.push('猪猫')
-          playerList[bindPlayerIndex] = ''
-          t2.push(player)
-          playerList[index] = ''
-          continue
-        } else if (t2.includes('猪猫') && i < form.model - 1) {
-          t2.push(player)
-          playerList[index] = ''
-          continue
-        } else {
-          i--
-          continue
-        }
-      }
-      t2.push(player)
-      playerList[index] = ''
-    }
     const roleHero = props.roleHero
     props.roleList.forEach(role => {
       const list = roleHero?.[role].slice() || []
       const num = roleNum[role]
       for (let i = 0; i < num; i++) {
         const index = Math.floor(Math.random() * list.length)
-        h1.push(list[index] + ' ' + role)
+        h1.push(list[index])
         list.splice(index, 1)
       }
       for (let i = 0; i < num; i++) {
         const index = Math.floor(Math.random() * list.length)
-        h2.push(list[index] + ' ' + role)
+        h2.push(list[index])
         list.splice(index, 1)
       }
     })
@@ -306,30 +283,14 @@ const handleSubmit = async () => {
   }
 }
 
-watch(() => team1.value, () => {
-  team.value = team1.value.concat(team2.value).map(item => ({ value: item, label: item, disabled: false }))
-})
-
-watch(() => hero1.value, () => {
-  hero.value = hero1.value.concat(hero2.value).map(item => ({ value: item, label: item, disabled: false }))
-})
-
 </script>
 
 <style lang="scss" scoped>
-:deep(.arco-transfer-view) {
-  width: 300px;
+.player-list {
+  width: 150px;
 }
 
-.hero-transfer {
-  :deep(.arco-transfer-view) {
-    height: 500px;
-  }
-}
-
-.player-transfer {
-  :deep(.arco-transfer-view) {
-    height: 280px;
-  }
+.hero-list {
+  width: 200px;
 }
 </style>
