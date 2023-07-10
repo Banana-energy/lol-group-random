@@ -31,19 +31,18 @@
 </template>
 
 <script setup lang="ts">
-import G6, { Algorithm, EdgeConfig, GraphData, NodeConfig } from '@antv/g6';
-import PlayerGraph, { gColors } from './Graph';
-import { FormInstance, MenuInstance, Message } from '@arco-design/web-vue';
+import { GraphData } from '@antv/g6';
+import { FormInstance, MenuInstance } from '@arco-design/web-vue';
 import { Rules } from './RandomMain.vue';
 
 const props = defineProps<{
-  bindGraph: NodeConfig[][];
+  showMenu: boolean;
   playerInfo: GraphData;
   activeKey: string;
 }>()
 
 const emit = defineEmits<{
-  (e: 'success'): void
+  (e: 'add-player', name: string): void
 }>()
 
 const formRef = ref<FormInstance>()
@@ -68,94 +67,23 @@ const rules = reactive<Rules>({
   ],
 })
 
-const playerLength = computed(() => props.playerInfo?.nodes?.length || 0)
-
 const handleSubmit = async () => {
   const valid = await formRef.value?.validate()
   if (valid === undefined) {
     const { name } = form
     if (name) {
-      props.playerInfo.nodes?.push({
-        id: name,
-        label: name,
-        size: 80,
-        color: gColors[0],
-        style: {
-          fill: gColors[playerLength.value % gColors.length],
-          lineWidth: 0,
-        },
-        labelCfg: {
-          style: {
-            fontSize: 20,
-            fontWeight: 300,
-            fill: '#fff',
-          },
-        },
-      })
-      localStorage.setItem('playerInfo', JSON.stringify(props.playerInfo))
-      emit('success')
+      emit('add-player', name)
       form.name = ''
-      graph.render(props.playerInfo)
-      Message.success('添加成功')
     }
   }
 }
 
-const container = ref<HTMLDivElement>()
-const contextmenu = ref<MenuInstance>()
+const container = ref<HTMLDivElement | null>(null)
+const contextmenu = ref<MenuInstance | null>(null)
 
-let graph: PlayerGraph
-const showMenu = ref(true)
-onMounted(() => {
-  graph = new PlayerGraph(container.value, contextmenu.value)
-  PlayerGraph.bindGraph = props.bindGraph
-  graph.render(props.playerInfo)
-
-  graph.graph?.on('aftercreateedge', () => {
-    if (graph.graph) {
-      const edges = graph.graph.save().edges as EdgeConfig[];
-      G6.Util.processParallelEdges(edges);
-      graph.graph.getEdges().forEach((edge, i) => {
-        graph.graph?.updateItem(edge, {
-          curveOffset: edges[i].curveOffset,
-          curvePosition: edges[i].curvePosition,
-        });
-      });
-      props.playerInfo.edges = graph.graph.save().edges as EdgeConfig[]
-      localStorage.setItem('playerInfo', JSON.stringify(props.playerInfo))
-      emit('success')
-      Message.success('绑定成功')
-    }
-  });
-  graph.graph?.on('afterremoveitem', () => {
-    const data = graph.graph?.save() as GraphData
-    if (data) {
-      props.playerInfo.edges = data.edges
-      props.playerInfo.nodes = data.nodes
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      PlayerGraph.bindGraph = Algorithm.connectedComponent(props.playerInfo)
-      localStorage.setItem('playerInfo', JSON.stringify(props.playerInfo))
-      emit('success')
-    }
-  })
-  showMenu.value = false
-})
-
-watch(() => props.activeKey, (val) => {
-  if (val === '2') {
-    if (graph.toolbar) {
-      graph.toolbar.init()
-      graph.toolbar.destroyed = false
-    }
-  } else {
-    if (graph.toolbar) {
-      if (!graph.toolbar.destroyed) {
-        graph.toolbar.destroy()
-        graph.toolbar.destroyed = true
-      }
-    }
-  }
+defineExpose({
+  container,
+  contextmenu,
 })
 
 </script>

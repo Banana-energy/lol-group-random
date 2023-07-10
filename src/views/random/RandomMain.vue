@@ -95,10 +95,10 @@
 <script setup lang="ts">
 import { FormInstance, FieldRule } from '@arco-design/web-vue';
 import { RoleHero } from './index.vue';
-import { GraphData, NodeConfig } from '@antv/g6';
+import { GraphData, INode } from '@antv/g6';
 
 const props = defineProps<{
-  bindGraph: NodeConfig[][];
+  bindGraph: INode[][];
   playerInfo?: GraphData;
   roleHero?: RoleHero;
   roleList: string[];
@@ -221,7 +221,7 @@ const random = (selectedPlayers: string[] = []) => {
     const index = Math.floor(Math.random() * playerList.length)
     const player = playerList[index]
     // 获取当前玩家的绑定玩家
-    const bindPlayers = props.bindGraph.find(nodes => nodes.find(node => node.id === player))
+    const bindPlayers = props.bindGraph.find(nodes => nodes.find(node => node.getID() === player))
     // 判断是否有绑定玩家
     if (bindPlayers) {
       if (bindPlayers.length === 1) {
@@ -230,7 +230,7 @@ const random = (selectedPlayers: string[] = []) => {
         playerList[index] = ''
       } else if (bindPlayers.length <= form.model - i) {
         // 获取绑定玩家并过滤掉不在玩家列表中的玩家
-        const bindPlayersName = bindPlayers.map(item => item.id).filter(item => playerList.includes(item))
+        const bindPlayersName = bindPlayers.map(item => item.getID()).filter(item => playerList.includes(item))
         // 将绑定玩家放入本队伍
         team.push(...bindPlayersName)
         // 将绑定玩家从玩家列表中删除

@@ -45,15 +45,15 @@
 
 <script setup lang="ts">
 import { InputInstance, Message } from '@arco-design/web-vue';
-import { HeroList } from './index.vue';
+import { IHeroList } from './index.vue';
 import { IconPlus } from '@arco-design/web-vue/es/icon';
 
 const props = defineProps<{
-  heroList: HeroList | null
+  heroList: IHeroList | null
 }>()
 
 const emit = defineEmits<{
-  (e: 'success', data: HeroList): void
+  (e: 'success', data: IHeroList): void
 }>()
 
 const colorMap: { [key: string]: string } = {
@@ -93,7 +93,7 @@ const handleAdd = (role: string) => {
         name: inputVal.value,
         roles: [role]
       })
-      emit('success', heroList as HeroList)
+      emit('success', heroList as IHeroList)
     }
     inputVal.value = '';
   }

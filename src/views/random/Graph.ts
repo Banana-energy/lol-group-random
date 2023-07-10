@@ -1,5 +1,6 @@
-import G6, { Graph, IG6GraphEvent, GraphData, Node, NodeConfig, Edge } from '@antv/g6';
+import G6, { Graph, GraphData, Node, Edge, Item } from '@antv/g6';
 import { MenuInstance, Message } from '@arco-design/web-vue';
+import debounce from 'lodash.debounce';
 
 const lightColors = [
   '#8FE9FF',
@@ -55,10 +56,17 @@ lightColors.forEach((lcolor, i) => {
 });
 
 export default class PlayerGraph {
-  static bindGraph: NodeConfig[][]
   container?: HTMLElement;
   graph: Graph | null = null;
   toolbar;
+  resize = debounce(() => {
+    if (!this.graph || this.graph.get('destroyed')) return;
+    if (!this.container) return;
+    const width = this.container.getBoundingClientRect().width;
+    const height = this.container.getBoundingClientRect().height;
+    this.graph.changeSize(width, height);
+    this.graph.fitCenter(true);
+  }, 500)
   constructor(container?: HTMLElement, contextmenu?: MenuInstance) {
     if (!container) {
       return
@@ -90,6 +98,11 @@ export default class PlayerGraph {
         }
         if (target.innerText === '敌对') {
           if (isEdge) {
+            item.update({
+              state: 'enemy',
+            })
+            this.setItemState(item, 'bind', false)
+            this.setItemState(item, 'enemy', true)
             this.graph?.updateItem(item, {
               label: '敌对',
               labelCfg: {
@@ -102,6 +115,11 @@ export default class PlayerGraph {
         }
         if (target.innerText === '绑定') {
           if (isEdge) {
+            item.update({
+              state: 'bind',
+            })
+            this.setItemState(item, 'bind', true)
+            this.setItemState(item, 'enemy', false)
             this.graph?.updateItem(item, {
               label: '绑定',
               labelCfg: {
@@ -134,48 +152,25 @@ export default class PlayerGraph {
         default: [{
           type: 'create-edge',
           trigger: 'click',
-          shouldBegin: (e: IG6GraphEvent) => {
-            if (e.item && e.item instanceof Node) {
-              startNode = e.item
-              const bindNodes = this.getBindPlayer(e.item)
-              if (bindNodes && bindNodes.length >= 3) {
-                Message.error(`${e.item.getModel().label}已绑定两人`);
-                return false;
-              }
-              const length = e.item.getEdges().length;
-              if (length >= 2) {
-                Message.error(`${e.item.getModel().label}已绑定两人`);
-                return false;
-              }
-              return true
+          shouldBegin: (e) => {
+            if (e.item instanceof Node) {
+              startNode = e.item;
             }
-            return false;
+            return true
           },
-          shouldEnd: (e: IG6GraphEvent) => {
-            const hasBind = startNode?.getEdges()
-            if (hasBind?.find((edge) => edge.getTarget()?.get?.('id') === e.item?.get('id') || edge.getSource()?.get?.('id') === e.item?.get('id'))) {
-              Message.error(`${e.item?.getModel().label}已绑定该玩家`);
+          shouldEnd: (e) => {
+            // 不能绑定自己
+            if (e.item instanceof Node && e.item === startNode) {
+              Message.error('不能绑定自己')
               return false
             }
-            if (e.item && e.item instanceof Node) {
-              const bindNodes = this.getBindPlayer(e.item)
-              if (bindNodes && bindNodes.length >= 3) {
-                Message.error(`${e.item.getModel().label}已被两人绑定`);
-                return false;
-              }
-              const length = e.item.getEdges().length;
-              if (length >= 2) {
-                Message.error(`${e.item.getModel().label}已被两人绑定`);
-                return false;
-              }
-              return true
-            }
-            return false;
+            return true
           }
         }],
       },
       defaultEdge: {
         label: '绑定',
+        state: 'bind',
         labelCfg: {
           autoRotate: true,
           style: {
@@ -191,53 +186,40 @@ export default class PlayerGraph {
       }
     })
 
-    const graph = this.graph;
-    graph.on('node:dragstart', (e) => {
-      graph?.layout();
-      refreshDragedNodePosition(e);
-    });
-    graph.on('node:drag', function (e) {
-      refreshDragedNodePosition(e);
-    });
-    graph.on('node:dragend', (e: IG6GraphEvent) => {
-      if (e.item) {
-        e.item.get('model').fx = null;
-        e.item.get('model').fy = null;
-      }
-    });
-
-    window.addEventListener('resize', this.resize)
-  }
-
-  getBindPlayer(node: Node) {
-    if (PlayerGraph.bindGraph) {
-      return PlayerGraph.bindGraph.find((nodes) => nodes.find((n) => n.id === node.get('id')))
-    }
-    return
-  }
-
-  resize() {
-    if (!this.graph || this.graph.get('destroyed')) return;
-    if (!this.container || !this.container.scrollWidth || !this.container.scrollHeight) return;
-    this.graph.changeSize(this.container.scrollWidth, this.container.scrollHeight);
+    window.addEventListener('resize', () => {
+      this.resize()
+    })
   }
 
   render(data?: GraphData) {
-    this.graph?.data(data);
-    this.graph?.render();
+    if (data) {
+      this.graph?.read(data);
+      data.edges?.forEach((edge) => {
+        if (edge.state === 'enemy' && edge.id) {
+          const item = this.graph?.findById(edge.id)
+          if (item) {
+            this.setItemState(item, 'bind', false)
+            this.setItemState(item, 'enemy', true)
+          }
+        }
+        if (edge.state === 'bind' && edge.id) {
+          const item = this.graph?.findById(edge.id)
+          if (item) {
+            this.setItemState(item, 'bind', true)
+            this.setItemState(item, 'enemy', false)
+          }
+        }
+      })
+    }
+  }
+
+  setItemState(item: Item, state: string, enabled: boolean) {
+    this.graph?.setItemState(item, state, enabled)
   }
 
   destroy() {
     this.graph?.destroy();
     this.graph = null;
     window.removeEventListener('resize', this.resize);
-  }
-}
-
-function refreshDragedNodePosition(e: IG6GraphEvent) {
-  if (e.item) {
-    const model = e.item.get('model');
-    model.fx = e.x;
-    model.fy = e.y;
   }
 }
