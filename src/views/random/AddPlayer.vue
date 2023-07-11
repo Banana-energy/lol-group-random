@@ -38,7 +38,6 @@ import { Rules } from './RandomMain.vue';
 const props = defineProps<{
   showMenu: boolean;
   playerInfo: GraphData;
-  activeKey: string;
 }>()
 
 const emit = defineEmits<{

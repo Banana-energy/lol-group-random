@@ -93,12 +93,13 @@
 </template>
 
 <script setup lang="ts">
-import { FormInstance, FieldRule } from '@arco-design/web-vue';
-import { RoleHero } from './index.vue';
-import { GraphData, INode } from '@antv/g6';
+import { FormInstance, FieldRule, Message } from '@arco-design/web-vue';
+import { RelationGraph, RoleHero } from './index.vue';
+import { GraphData } from '@antv/g6';
 
 const props = defineProps<{
-  bindGraph: INode[][];
+  bindGraph: RelationGraph;
+  enemyGraph: RelationGraph;
   playerInfo?: GraphData;
   roleHero?: RoleHero;
   roleList: string[];
@@ -217,25 +218,48 @@ const random = (selectedPlayers: string[] = []) => {
   let playerList = form.playerList.map(item => item).filter(item => !selectedPlayers.includes(item))
   const team = []
   for (let i = 0; i < form.model; i++) {
-    playerList = playerList.filter(item => item)
     const index = Math.floor(Math.random() * playerList.length)
     const player = playerList[index]
-    // 获取当前玩家的绑定玩家
-    const bindPlayers = props.bindGraph.find(nodes => nodes.find(node => node.getID() === player))
-    // 判断是否有绑定玩家
-    if (bindPlayers) {
-      if (bindPlayers.length === 1) {
-        // 如果只有一个绑定玩家(自己)则直接放入本队伍
-        team.push(player)
+    // 获取当前玩家的敌对玩家
+    const enemyPlayers = props.enemyGraph[player]
+    if (enemyPlayers && enemyPlayers.length) {
+      // 如果有敌对玩家则将敌对玩家从玩家列表中删除
+      enemyPlayers.forEach(item => {
+        const index = playerList.findIndex(player => player === item)
         playerList[index] = ''
-      } else if (bindPlayers.length <= form.model - i) {
+      })
+    }
+    playerList = playerList.filter(item => item)
+    if (playerList.length < form.model - i) {
+      Message.error('敌对玩家数量过多')
+      return []
+    }
+    // 获取当前玩家的绑定玩家
+    const bindPlayers = props.bindGraph[player]
+    // 判断是否有绑定玩家
+    if (bindPlayers && bindPlayers.length) {
+      if (bindPlayers.length > form.model) {
+        Message.error('绑定玩家数量过多')
+        return []
+      }
+      if (bindPlayers.length <= form.model - i) {
         // 获取绑定玩家并过滤掉不在玩家列表中的玩家
-        const bindPlayersName = bindPlayers.map(item => item.getID()).filter(item => playerList.includes(item))
+        const bindPlayersName = bindPlayers.filter(item => playerList.includes(item))
         // 将绑定玩家放入本队伍
         team.push(...bindPlayersName)
         // 将绑定玩家从玩家列表中删除
         bindPlayersName.forEach(item => {
           const index = playerList.findIndex(player => player === item)
+          const bindPlayer = playerList[index]
+          // 获取绑定玩家的敌对玩家
+          const enemyPlayers = props.enemyGraph[bindPlayer]
+          if (enemyPlayers && enemyPlayers.length) {
+            // 如果有敌对玩家则将敌对玩家从玩家列表中删除
+            enemyPlayers.forEach(item => {
+              const index = playerList.findIndex(player => player === item)
+              playerList[index] = ''
+            })
+          }
           playerList[index] = ''
         })
         // 跳过绑定玩家的数量
@@ -257,6 +281,9 @@ const handleSubmit = async () => {
   const valid = await formRef.value?.validate()
   if (valid === undefined) {
     const t1: string[] = random()
+    if (!t1.length) {
+      return
+    }
     const t2: string[] = random(t1)
     const h1: string[] = []
     const h2: string[] = []

@@ -169,6 +169,7 @@ export default class PlayerGraph {
         }],
       },
       defaultEdge: {
+        type: 'arc',
         label: '绑定',
         state: 'bind',
         labelCfg: {

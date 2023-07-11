@@ -4,6 +4,7 @@
       <a-tab-pane key="1" title="随机分组">
         <random-main
           :bind-graph="bindGraph"
+          :enemy-graph="enemyGraph"
           :player-info="playerInfo"
           :role-hero="roleHero"
           :role-list="roleList"
@@ -12,14 +13,13 @@
       <a-tab-pane key="2" title="添加玩家">
         <add-player
           ref="addPlayer"
-          :active-key="activeKey"
           :player-info="playerInfo"
           :show-menu="showMenu"
           @add-player="handleAddPlayer"
         />
       </a-tab-pane>
       <a-tab-pane key="3" title="英雄列表">
-        <hero-list :hero-list="heroList" @success="(val) => heroList = val" />
+        <hero-list :role-hero="roleHero" @add-hero="handleAddHero" @delete-hero="handleDelHero" />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -29,24 +29,14 @@
 import RandomMain from './RandomMain.vue';
 import AddPlayer from './AddPlayer.vue';
 import HeroList from './HeroList.vue';
-import G6, { GraphData, Edge, EdgeConfig, INode } from '@antv/g6';
+import G6, { GraphData, Edge, EdgeConfig } from '@antv/g6';
 import { Message } from '@arco-design/web-vue';
 import PlayerGraph, { gColors } from './Graph';
+import dfs from '@/utils/dfs';
 
 defineOptions({
   name: 'RandomGroup',
 })
-
-export type HeroAttrs = {
-  name: string;
-  roles: string[];
-}
-
-export interface IHeroList {
-  hero: HeroAttrs[],
-  fileTime: string,
-  version: string,
-}
 
 const roleList = ['法师', '战士', '坦克', '刺客', '射手']
 
@@ -54,92 +44,110 @@ export type RoleHero = {
   [key: string]: string[];
 };
 
+export type RelationGraph = {
+  [key: string]: string[];
+};
+
 const activeKey = ref('1')
 
-const heroList: Ref<IHeroList | null> = ref(null)
-const roleHero: Ref<RoleHero | undefined> = ref(undefined)
+const roleHero: Ref<RoleHero> = ref({})
 const playerInfo: Ref<GraphData> = ref({})
 
-const bindGraph = ref<INode[][]>([])
-const enemyGraph = ref<INode[][]>([])
-
-let playerGraph: PlayerGraph | undefined
+const playerGraph = ref<PlayerGraph | null>(null)
 const showMenu = ref(true)
 const addPlayer = ref<typeof AddPlayer | null>(null)
 
 onMounted(() => {
-  playerGraph = new PlayerGraph(addPlayer.value?.container, addPlayer.value?.contextmenu)
-  playerGraph?.render(playerInfo.value)
-  playerGraph.graph?.on<{ edge: Edge }>('aftercreateedge', (e) => {
-    if (playerGraph?.graph) {
+  playerGraph.value = new PlayerGraph(addPlayer.value?.container, addPlayer.value?.contextmenu)
+  playerGraph.value?.render(playerInfo.value)
+  playerGraph.value.graph?.on<{ edge: Edge }>('aftercreateedge', (e) => {
+    if (playerGraph.value?.graph) {
       e.edge.set('states', ['bind'])
-      const edges = playerGraph.graph.save().edges as EdgeConfig[];
+      const edges = playerGraph.value.graph.save().edges as EdgeConfig[];
       G6.Util.processParallelEdges(edges);
-      playerGraph.graph.getEdges().forEach((edge, i) => {
-        playerGraph?.graph?.updateItem(edge, {
+      playerGraph.value.graph.getEdges().forEach((edge, i) => {
+        playerGraph.value?.graph?.updateItem(edge, {
           curveOffset: edges[i].curveOffset,
           curvePosition: edges[i].curvePosition,
         });
       });
-      const data = playerGraph?.graph?.save() as GraphData
+      const data = playerGraph.value?.graph?.save() as GraphData
       savePlayerInfo(data)
       Message.success('绑定成功')
     }
   });
-  playerGraph.graph?.on('afterremoveitem', () => {
-    const data = playerGraph?.graph?.save() as GraphData
+  playerGraph.value.graph?.on('afterremoveitem', () => {
+    const data = playerGraph.value?.graph?.save() as GraphData
     savePlayerInfo(data)
   })
-  playerGraph.graph?.on('afterupdateitem', () => {
-    const data = playerGraph?.graph?.save() as GraphData
+  playerGraph.value.graph?.on('afterupdateitem', () => {
+    const data = playerGraph.value?.graph?.save() as GraphData
+    if (data.edges?.some(edge => !edge.targetNode)) {
+      return
+    }
     savePlayerInfo(data)
   })
   showMenu.value = false
-  getRelationGraph()
 })
-
-const getBindGraph = () => {
-  const bindPlayer = playerGraph?.graph?.getEdges().filter(edge => edge.getStates().includes('bind')).map(edge => [edge.getSource(), edge.getTarget()]) || []
-  const set = new Set()
-  bindPlayer.forEach(nodes => {
-    nodes.forEach(node => {
-      set.add(node.getID())
-    })
-  })
-  const unbindPlayer = playerGraph?.graph?.getNodes().filter(node => !set.has(node.getID())) || []
-  bindGraph.value = [...bindPlayer, ...unbindPlayer.map(node => [node])]
-}
-
-const getEnemyGraph = () => {
-  const bindPlayer = playerGraph?.graph?.getEdges().filter(edge => edge.getStates().includes('enemy')).map(edge => [edge.getSource(), edge.getTarget()]) || []
-  const set = new Set()
-  bindPlayer.forEach(nodes => {
-    nodes.forEach(node => {
-      set.add(node.getID())
-    })
-  })
-  const unbindPlayer = playerGraph?.graph?.getNodes().filter(node => !set.has(node.getID())) || []
-  enemyGraph.value = [...bindPlayer, ...unbindPlayer.map(node => [node])]
-}
-
-const getRelationGraph = () => {
-  getBindGraph()
-  getEnemyGraph()
-}
 
 const savePlayerInfo = (data?: GraphData) => {
   if (data) {
     playerInfo.value.edges = data.edges
     playerInfo.value.nodes = data.nodes
     localStorage.setItem('playerInfo', JSON.stringify(playerInfo.value))
-    getRelationGraph()
   }
 }
 
+const bindGraph = computed<RelationGraph>(() => {
+  const nodes = playerInfo.value.nodes || []
+  const map: { [key: string]: string[] } = {}
+  nodes.forEach(node => {
+    const bindSet = new Set<string>()
+    dfs(playerInfo.value, node.id, {
+      enter({ current, previous }) {
+        const edge = playerGraph.value?.graph?.find('edge', (edge: Edge) => {
+          const source = edge.getSource().getID()
+          const target = edge.getTarget().getID()
+          return (source === current && target === previous) || (source === previous && target === current)
+        })
+        if (edge?.getStates().includes('bind')) {
+          bindSet.add(previous)
+          bindSet.add(current)
+        }
+        map[node.id] = [...bindSet]
+      }
+    })
+  })
+  return map
+})
+
+const enemyGraph = computed<RelationGraph>(() => {
+  const nodes = playerInfo.value.nodes || []
+  const map: { [key: string]: string[] } = {}
+  nodes.forEach(node => {
+    const enemySet = new Set<string>()
+    dfs(playerInfo.value, node.id, {
+      enter({ current, previous }) {
+        const edge = playerGraph.value?.graph?.find('edge', (edge: Edge) => {
+          const source = edge.getSource().getID()
+          const target = edge.getTarget().getID()
+          return (source === current && target === previous) || (source === previous && target === current)
+        })
+        if (edge?.getStates().includes('enemy')) {
+          enemySet.add(previous)
+          enemySet.add(current)
+        }
+        map[node.id] = [...enemySet]
+      }
+    })
+  })
+  return map
+})
+
 const handleAddPlayer = (name: string) => {
-  if (playerGraph?.graph) {
-    const playerLength = playerGraph.graph.getNodes().length
-    playerGraph.graph.addItem('node', {
+  if (playerGraph.value?.graph) {
+    const playerLength = playerGraph.value.graph.getNodes().length
+    playerGraph.value.graph.addItem('node', {
       id: name,
       label: name,
       size: 80,
@@ -156,24 +164,25 @@ const handleAddPlayer = (name: string) => {
         },
       },
     })
-    const data = playerGraph?.graph?.save() as GraphData
+    const data = playerGraph.value?.graph?.save() as GraphData
     savePlayerInfo(data)
+    playerGraph.value?.graph?.layout()
     Message.success('添加成功')
   }
 }
 
 watch(() => activeKey.value, (val) => {
   if (val === '2') {
-    if (playerGraph?.toolbar) {
-      playerGraph.toolbar.init()
-      playerGraph.toolbar.destroyed = false
+    if (playerGraph.value?.toolbar) {
+      playerGraph.value.toolbar.init()
+      playerGraph.value.toolbar.destroyed = false
     }
   } else {
     nextTick(() => {
-      if (playerGraph?.toolbar) {
-        if (!playerGraph.toolbar.destroyed) {
-          playerGraph.toolbar.destroy()
-          playerGraph.toolbar.destroyed = true
+      if (playerGraph.value?.toolbar) {
+        if (!playerGraph.value.toolbar.destroyed) {
+          playerGraph.value.toolbar.destroy()
+          playerGraph.value.toolbar.destroyed = true
         }
       }
     })
@@ -195,11 +204,62 @@ const initPlayerInfo = () => {
   }
 }
 
+interface HeroFile { hero: { name: string; roles: string[]; }[]; version: string; fileTime: string; }
+
+const handleAddHero = (data: { role: string, name: string }) => {
+  const { role, name } = data
+  const heroList = JSON.parse(localStorage.getItem('heroList') || '{}') as HeroFile
+  const hero = heroList.hero.find(item => item.name === name)
+  if (hero) {
+    if (!hero.roles.includes(role)) {
+      hero.roles.push(role)
+      localStorage.setItem('heroList', JSON.stringify(heroList))
+      Message.success('添加成功')
+    } else {
+      Message.error('英雄已存在')
+    }
+  } else {
+    heroList.hero.push({
+      name,
+      roles: [role],
+    })
+    localStorage.setItem('heroList', JSON.stringify(heroList))
+    Message.success('添加成功')
+  }
+  initHero()
+}
+
+const handleDelHero = (data: { role: string, name: string }) => {
+  const { role, name } = data
+  const heroName = name.split('(')[0]
+  const heroList = JSON.parse(localStorage.getItem('heroList') || '{}') as HeroFile
+  const hero = heroList.hero.find(item => item.name === heroName)
+  if (hero) {
+    if (hero.roles.includes(role)) {
+      hero.roles = hero.roles.filter(item => item !== role)
+      localStorage.setItem('heroList', JSON.stringify(heroList))
+      Message.success('删除成功')
+    } else {
+      Message.error('英雄不存在')
+    }
+  } else {
+    Message.error('英雄不存在')
+  }
+  initHero()
+}
+
 const initHero = async () => {
-  heroList.value = (await import('@/assets/hero-list.json')).default
+  const heroFile = localStorage.getItem('heroList')
+  let heroList: HeroFile | undefined
+  if (heroFile) {
+    heroList = JSON.parse(heroFile) as HeroFile
+  } else {
+    heroList = (await import('@/assets/hero-list.json')).default as HeroFile
+    localStorage.setItem('heroList', JSON.stringify(heroList))
+  }
   roleHero.value = roleList.reduce((pre, role, index) => ({
     ...pre,
-    [roleList[index]]: heroList.value?.hero.filter(item => item.roles.includes(role)).map(item => {
+    [roleList[index]]: heroList?.hero.filter(item => item.roles.includes(role)).map(item => {
       return item.name + `(${item.roles})`
     }) || []
   }), {})

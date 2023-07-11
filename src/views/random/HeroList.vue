@@ -1,36 +1,32 @@
 <template>
-  <a-descriptions :column="1" title="英雄列表">
-    <a-descriptions-item v-for="item of data" :key="item.label" :label="item.label">
-      <a-tag color="arcoblue">{{ item.value }}</a-tag>
-    </a-descriptions-item>
-  </a-descriptions>
-  <div v-if="heroList">
+  <div v-if="roleHero">
     <a-collapse>
-      <a-collapse-item v-for="item in Object.keys(roleHeroList)" :key="item" :header="item">
+      <a-collapse-item v-for="(item, index) in Object.keys(roleHero)" :key="item" :header="item">
         <a-scrollbar class="max-h-sm overflow-y-auto">
           <a-tag
-            v-for="hero in roleHeroList[item]"
+            v-for="(hero) in roleHero[item]"
             :key="hero"
             :color="colorMap[item] || 'purple'"
             class="mt-2 mr-2"
             closable
+            @close="handleClose(item, hero)"
           >
             {{ hero }}
           </a-tag>
           <a-input
-            v-if="showInput"
+            v-show="showInput[index]"
             ref="inputRef"
             v-model.trim="inputVal"
             class="!w-20 mt-2 arco-tag arco-tag-size-medium"
             size="mini"
-            @blur="handleAdd(item)"
-            @keyup.enter="handleAdd(item)"
+            @blur="handleAdd(item, index)"
+            @keyup.enter="handleAdd(item, index)"
           />
           <a-tag
-            v-else
+            v-show="!showInput[index]"
             class="cursor-pointer mt-2 mr-2"
             color="blue"
-            @click="handleEdit"
+            @click="handleEdit(index)"
           >
             <template #icon>
               <icon-plus />
@@ -44,16 +40,23 @@
 </template>
 
 <script setup lang="ts">
-import { InputInstance, Message } from '@arco-design/web-vue';
-import { IHeroList } from './index.vue';
+import { InputInstance } from '@arco-design/web-vue';
+import { RoleHero } from './index.vue';
 import { IconPlus } from '@arco-design/web-vue/es/icon';
 
 const props = defineProps<{
-  heroList: IHeroList | null
+  roleHero: RoleHero
 }>()
 
 const emit = defineEmits<{
-  (e: 'success', data: IHeroList): void
+  (e: 'add-hero', data: {
+    role: string,
+    name: string,
+  }): void
+  (e: 'delete-hero', data: {
+    role: string,
+    name: string,
+  }): void
 }>()
 
 const colorMap: { [key: string]: string } = {
@@ -64,65 +67,42 @@ const colorMap: { [key: string]: string } = {
   射手: 'purple',
 }
 
-interface RoleHeroList {
-  [key: string]: string[]
-}
-
-const inputRef = ref<InputInstance | null>(null);
-const showInput = ref(false);
+const inputRef = ref<InputInstance[]>([]);
+const showInput = ref<boolean[]>([]);
 const inputVal = ref('');
 
-const handleEdit = () => {
-  showInput.value = true;
+onMounted(() => {
+  Object.keys(props.roleHero).forEach(() => {
+    showInput.value.push(false);
+  });
+})
+
+const handleEdit = (index:number) => {
+  showInput.value[index] = true;
 
   nextTick(() => {
     if (inputRef.value) {
-      inputRef.value?.focus();
+      inputRef.value?.[index].focus();
     }
   });
 };
 
-const handleAdd = (role: string) => {
+const handleAdd = (role: string, index: number) => {
   if (inputVal.value) {
-    const heroList = props.heroList
-    const hero = heroList?.hero.find(item => item.name === inputVal.value)
-    if (hero) {
-      Message.warning(`英雄${inputVal.value}已存在`)
-    } else {
-      heroList?.hero.push({
-        name: inputVal.value,
-        roles: [role]
-      })
-      emit('success', heroList as IHeroList)
-    }
+    emit('add-hero', {
+      role,
+      name: inputVal.value,
+    })
     inputVal.value = '';
   }
-  showInput.value = false;
+  showInput.value[index] = false;
 };
 
-const roleHeroList = computed(() => {
-  return props.heroList?.hero.reduce((pre, item) => {
-    item.roles.forEach(role => {
-      pre[role] = pre[role] || []
-      pre[role].push(item.name)
-    })
-    return pre
-  }, {} as RoleHeroList) || {}
-})
-
-const data = [
-  {
-    label: '版本',
-    value: props.heroList?.version || '',
-  },
-  {
-    label: '更新时间',
-    value: props.heroList?.fileTime || '',
-  },
-  {
-    label: '英雄数量',
-    value: props.heroList?.hero.length || '',
-  }
-]
+const handleClose = (role: string, hero: string) => {
+  emit('delete-hero', {
+    role,
+    name: hero,
+  })
+};
 
 </script>
