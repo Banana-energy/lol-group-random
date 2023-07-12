@@ -164,6 +164,11 @@ export default class PlayerGraph {
               Message.error('不能绑定自己')
               return false
             }
+            const hasBind = startNode?.getEdges()
+            if (hasBind?.find((edge) => edge.getTarget()?.get?.('id') === e.item?.get('id') || edge.getSource()?.get?.('id') === e.item?.get('id'))) {
+              Message.error(`${e.item?.getModel().label}已绑定该玩家`);
+              return false
+            }
             return true
           }
         }],

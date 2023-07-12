@@ -43,16 +43,10 @@ function initCallbacks(callbacks: IAlgorithmCallbacks = {} as IAlgorithmCallback
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const stubCallback = () => { };
 
-  const allowTraversalCallback = (() => {
-    const seen = {};
-    // eslint-disable-next-line
-    // @ts-ignore
+  const allowTraversalCallback: (param: { previous?: string; current?: string; next: string }) => boolean = (() => {
+    const seen: { [key: string]: boolean } = {};
     return ({ next }) => {
-      // eslint-disable-next-line
-      // @ts-ignore
       if (!seen[next]) {
-        // eslint-disable-next-line
-        // @ts-ignore
         seen[next] = true;
         return true;
       }

@@ -82,7 +82,7 @@ onMounted(() => {
   })
   playerGraph.value.graph?.on('afterupdateitem', () => {
     const data = playerGraph.value?.graph?.save() as GraphData
-    if (data.edges?.some(edge => !edge.targetNode)) {
+    if(data.edges?.some(edge => typeof edge.target !== 'string')) {
       return
     }
     savePlayerInfo(data)
@@ -103,6 +103,7 @@ const bindGraph = computed<RelationGraph>(() => {
   const map: { [key: string]: string[] } = {}
   nodes.forEach(node => {
     const bindSet = new Set<string>()
+    const seen: { [key: string]: boolean } = {};
     dfs(playerInfo.value, node.id, {
       enter({ current, previous }) {
         const edge = playerGraph.value?.graph?.find('edge', (edge: Edge) => {
@@ -115,6 +116,21 @@ const bindGraph = computed<RelationGraph>(() => {
           bindSet.add(current)
         }
         map[node.id] = [...bindSet]
+      },
+      allowTraversal({ current, previous, next }) {
+        if (!seen[next]) {
+          seen[next] = true;
+          const edge = playerGraph.value?.graph?.find('edge', (edge: Edge) => {
+            const source = edge.getSource().getID()
+            const target = edge.getTarget().getID()
+            return (source === current && target === previous) || (source === previous && target === current)
+          })
+          if (edge?.getStates().includes('enemy')) {
+            return false
+          }
+          return true;
+        }
+        return false;
       }
     })
   })
@@ -126,6 +142,7 @@ const enemyGraph = computed<RelationGraph>(() => {
   const map: { [key: string]: string[] } = {}
   nodes.forEach(node => {
     const enemySet = new Set<string>()
+    const seen: { [key: string]: boolean } = {};
     dfs(playerInfo.value, node.id, {
       enter({ current, previous }) {
         const edge = playerGraph.value?.graph?.find('edge', (edge: Edge) => {
@@ -138,6 +155,21 @@ const enemyGraph = computed<RelationGraph>(() => {
           enemySet.add(current)
         }
         map[node.id] = [...enemySet]
+      },
+      allowTraversal({ current, previous, next }) {
+        if (!seen[next]) {
+          seen[next] = true;
+          const edge = playerGraph.value?.graph?.find('edge', (edge: Edge) => {
+            const source = edge.getSource().getID()
+            const target = edge.getTarget().getID()
+            return (source === current && target === previous) || (source === previous && target === current)
+          })
+          if (edge?.getStates().includes('bind')) {
+            return false
+          }
+          return true;
+        }
+        return false;
       }
     })
   })

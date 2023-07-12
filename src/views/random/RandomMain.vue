@@ -214,14 +214,33 @@ const team2 = ref<string[]>([])
 const hero1 = ref<string[]>([])
 const hero2 = ref<string[]>([])
 
+let finished = true
+
 const random = (selectedPlayers: string[] = []) => {
-  let playerList = form.playerList.map(item => item).filter(item => !selectedPlayers.includes(item))
-  const team = []
+  let playerList = form.playerList.filter(item => item && !selectedPlayers.includes(item))
+  const bindResult = Object.values(props.bindGraph).some(bind => {
+    return bind.filter(item => playerList.includes(item)).length > form.model
+  })
+  if (bindResult) {
+    Message.error('绑定玩家数量过多')
+    finished = true
+    return []
+  }
+  const enemyResult = Object.values(props.enemyGraph).some(enemy => {
+    return enemy.filter(item => playerList.includes(item)).length > form.model
+  })
+  if (enemyResult) {
+    Message.error('敌对玩家数量过多')
+    finished = true
+    return []
+  }
+  const team: string[] = []
   for (let i = 0; i < form.model; i++) {
+    playerList = playerList.filter(item => item)
     const index = Math.floor(Math.random() * playerList.length)
     const player = playerList[index]
     // 获取当前玩家的敌对玩家
-    const enemyPlayers = props.enemyGraph[player]
+    const enemyPlayers = props.enemyGraph[player].filter(item => item !== player)
     if (enemyPlayers && enemyPlayers.length) {
       // 如果有敌对玩家则将敌对玩家从玩家列表中删除
       enemyPlayers.forEach(item => {
@@ -230,25 +249,16 @@ const random = (selectedPlayers: string[] = []) => {
       })
     }
     playerList = playerList.filter(item => item)
-    if (playerList.length < form.model - i) {
-      Message.error('敌对玩家数量过多')
-      return []
-    }
     // 获取当前玩家的绑定玩家
-    const bindPlayers = props.bindGraph[player]
+    const bindPlayers = props.bindGraph[player].filter(item => playerList.includes(item))
     // 判断是否有绑定玩家
-    if (bindPlayers && bindPlayers.length) {
-      if (bindPlayers.length > form.model) {
-        Message.error('绑定玩家数量过多')
-        return []
-      }
+    if (bindPlayers?.length) {
       if (bindPlayers.length <= form.model - i) {
         // 获取绑定玩家并过滤掉不在玩家列表中的玩家
-        const bindPlayersName = bindPlayers.filter(item => playerList.includes(item))
         // 将绑定玩家放入本队伍
-        team.push(...bindPlayersName)
+        team.push(...bindPlayers)
         // 将绑定玩家从玩家列表中删除
-        bindPlayersName.forEach(item => {
+        bindPlayers.forEach(item => {
           const index = playerList.findIndex(player => player === item)
           const bindPlayer = playerList[index]
           // 获取绑定玩家的敌对玩家
@@ -257,16 +267,21 @@ const random = (selectedPlayers: string[] = []) => {
             // 如果有敌对玩家则将敌对玩家从玩家列表中删除
             enemyPlayers.forEach(item => {
               const index = playerList.findIndex(player => player === item)
+              if (team.includes(playerList[index])) {
+                finished = false
+                return []
+              }
               playerList[index] = ''
             })
           }
           playerList[index] = ''
         })
         // 跳过绑定玩家的数量
-        i += bindPlayersName.length - 1
+        i += bindPlayers.length - 1
         continue
       } else {
-        i--
+        finished = false
+        return []
       }
     } else {
       // 如果没有绑定玩家则随机分配
@@ -274,13 +289,17 @@ const random = (selectedPlayers: string[] = []) => {
       playerList[index] = ''
     }
   }
+  finished = true
   return team
 }
 
 const handleSubmit = async () => {
   const valid = await formRef.value?.validate()
   if (valid === undefined) {
-    const t1: string[] = random()
+    let t1: string[] = random()
+    while (!t1.length && !finished) {
+      t1 = random()
+    }
     if (!t1.length) {
       return
     }
