@@ -23,7 +23,7 @@
       <a-input-number
         v-model="form.heroPoolNum"
         :max="30"
-        :min="15"
+        :min="5"
         placeholder="请输入英雄池数量"
       />
     </a-form-item>
@@ -44,52 +44,91 @@
     </a-form-item>
     <a-form-item>
       <a-button type="primary" long @click="handleSubmit">
-        确定
+        随机分组
+      </a-button>
+      <a-button
+        class="ml-2"
+        status="success"
+        type="primary"
+        long
+        @click="handleSaveDefaultConfig"
+      >
+        保存为默认配置
+      </a-button>
+      <a-button
+        class="ml-2"
+        status="success"
+        type="primary"
+        long
+        @click="handleSaveHeroConfig"
+      >
+        保存英雄规则
       </a-button>
     </a-form-item>
   </a-form>
-  <a-list :bordered="false" :grid-props="{ gutter: 0, xs: 24, sm: 12, md: 12, lg: 6, xl: 6 }">
-    <a-list-item>
-      <a-list size="small">
-        <template #header>
-          队伍一
-        </template>
-        <a-list-item v-for="item in team1" :key="item">
-          {{ item }}
-        </a-list-item>
-      </a-list>
-    </a-list-item>
-    <a-list-item>
-      <a-list size="small">
-        <template #header>
-          队伍二
-        </template>
-        <a-list-item v-for="item in team2" :key="item">
-          {{ item }}
-        </a-list-item>
-      </a-list>
-    </a-list-item>
-    <a-list-item>
-      <a-list size="small">
-        <template #header>
+  <div class="flex ">
+    <a-list :bordered="false" :grid-props="{ gutter: 0, xs: 24, sm: 24, md: 24, lg: 1, xl: 12 }" class="w-1/2">
+      <a-list-item>
+        <a-list size="small">
+          <template #header>
+            队伍一
+          </template>
+          <a-list-item v-for="item in team1" :key="item">
+            {{ item }}
+          </a-list-item>
+        </a-list>
+      </a-list-item>
+      <a-list-item>
+        <a-list size="small">
+          <template #header>
+            队伍二
+          </template>
+          <a-list-item v-for="item in team2" :key="item">
+            {{ item }}
+          </a-list-item>
+        </a-list>
+      </a-list-item>
+    </a-list>
+    <a-split
+      :size="0.5"
+      class="w-1/2 border-gray-300 border"
+      min="80px"
+      style="margin: 13px 20px"
+    >
+      <template #first>
+        <a-typography-title :heading="6" class="px-2">
           队伍一英雄
-        </template>
-        <a-list-item v-for="item in hero1" :key="item">
-          {{ item }}
-        </a-list-item>
-      </a-list>
-    </a-list-item>
-    <a-list-item>
-      <a-list size="small">
-        <template #header>
+        </a-typography-title>
+        <a-typography-paragraph class="px-2">
+          <a-tag
+            v-for="item in hero1"
+            :key="item"
+            class="m-0.5"
+            color="magenta"
+            bordered
+          >
+            {{ item }}
+          </a-tag>
+        </a-typography-paragraph>
+      </template>
+      <template #second>
+        <a-typography-title :heading="6" class="px-2">
           队伍二英雄
-        </template>
-        <a-list-item v-for="item in hero2" :key="item">
-          {{ item }}
-        </a-list-item>
-      </a-list>
-    </a-list-item>
-  </a-list>
+        </a-typography-title>
+        <a-typography-paragraph class="px-2">
+          <a-tag
+            v-for="item in hero2"
+            :key="item"
+            class="m-0.5"
+            color="green"
+            bordered
+          >
+            {{ item }}
+          </a-tag>
+        </a-typography-paragraph>
+      </template>
+    </a-split>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -170,8 +209,8 @@ const form = reactive<Form>({
   playerList: [],
   heroPoolNum: 15,
   heroRules: {
-    战士: 4,
-    法师: 5,
+    战士: 5,
+    法师: 4,
     坦克: 2,
     刺客: 2,
     射手: 2,
@@ -179,35 +218,99 @@ const form = reactive<Form>({
 })
 
 watch(() => form.model, (val) => {
-  if (val === 5) {
-    form.heroPoolNum = 15
+  const heroRules = localStorage.getItem('heroRules')
+  if (heroRules) {
+    const data = JSON.parse(heroRules)
+    if (data) {
+      form.heroRules = data[val] || {
+        战士: 5,
+        法师: 4,
+        坦克: 2,
+        刺客: 2,
+        射手: 2,
+      }
+    }
+  } else {
     form.heroRules = {
-      战士: 4,
-      法师: 5,
+      战士: 5,
+      法师: 4,
       坦克: 2,
       刺客: 2,
       射手: 2,
     }
-  } else if (val === 4) {
-    form.heroPoolNum = 12
-    form.heroRules = {
-      战士: 3,
+  }
+  const heroPoolNum = localStorage.getItem('heroPoolNum')
+  if (heroPoolNum) {
+    const data = JSON.parse(heroPoolNum)
+    if (data) {
+      form.heroPoolNum = data[val] || 15
+    }
+  } else {
+    form.heroPoolNum = 15
+  }
+})
+
+const initDefaultConfig = () => {
+  const storeForm = localStorage.getItem('form')
+  if (storeForm) {
+    const data = JSON.parse(storeForm)
+    form.model = data?.model || 5
+    form.playerList = data?.playerList || []
+    form.heroPoolNum = data?.heroPoolNum || 15
+    form.heroRules = data?.heroRules || {
+      战士: 5,
       法师: 4,
       坦克: 2,
       刺客: 2,
-      射手: 1,
-    }
-  } else if (val === 3) {
-    form.heroPoolNum = 9
-    form.heroRules = {
-      战士: 2,
-      法师: 3,
-      坦克: 2,
-      刺客: 1,
-      射手: 1,
+      射手: 2,
     }
   }
+}
+
+onMounted(() => {
+  initDefaultConfig()
 })
+
+const handleSaveDefaultConfig = async () => {
+  const valid = await formRef.value?.validateField(['model', 'heroPoolNum', 'heroRules'])
+  if (valid === undefined) {
+    localStorage.setItem('form', JSON.stringify(form))
+    Message.success('保存成功')
+  }
+}
+
+const handleSaveHeroConfig = async () => {
+  const valid = await formRef.value?.validateField(['heroRules', 'heroPoolNum', 'model'])
+  if (valid === undefined) {
+    const heroRules = localStorage.getItem('heroRules')
+    if (heroRules) {
+      const data = JSON.parse(heroRules)
+      if (data) {
+        data[form.model] = form.heroRules
+        localStorage.setItem('heroRules', JSON.stringify(data))
+      }
+    } else {
+      const data = {
+        [form.model]: form.heroRules,
+      }
+      localStorage.setItem('heroRules', JSON.stringify(data))
+    }
+    const heroPoolNum = localStorage.getItem('heroPoolNum')
+    if (heroPoolNum) {
+      const data = JSON.parse(heroPoolNum)
+      if (data) {
+        data[form.model] = form.heroPoolNum
+        localStorage.setItem('heroPoolNum', JSON.stringify(data))
+      }
+    } else {
+      const data = {
+        [form.model]: form.heroPoolNum,
+      }
+      localStorage.setItem('heroPoolNum', JSON.stringify(data))
+    }
+    Message.success('保存成功')
+  }
+}
 
 const team1 = ref<string[]>([])
 const team2 = ref<string[]>([])
