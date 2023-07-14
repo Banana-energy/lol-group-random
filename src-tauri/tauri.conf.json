@@ -26,7 +26,7 @@
         "icons/original.png",
         "icons/original.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.lol.random",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

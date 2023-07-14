@@ -239,6 +239,10 @@ const random = (selectedPlayers: string[] = []) => {
     playerList = playerList.filter(item => item)
     const index = Math.floor(Math.random() * playerList.length)
     const player = playerList[index]
+    if (!player) {
+      finished = false
+      return []
+    }
     // 获取当前玩家的敌对玩家
     const enemyPlayers = props.enemyGraph[player].filter(item => item !== player)
     if (enemyPlayers && enemyPlayers.length) {
@@ -286,7 +290,10 @@ const random = (selectedPlayers: string[] = []) => {
     } else {
       // 如果没有绑定玩家则随机分配
       team.push(player)
-      playerList[index] = ''
+      const index = playerList.findIndex(item => item === player)
+      if (index !== -1) {
+        playerList[index] = ''
+      }
     }
   }
   finished = true
@@ -303,7 +310,17 @@ const handleSubmit = async () => {
     if (!t1.length) {
       return
     }
-    const t2: string[] = random(t1)
+    let t2: string[] = random(t1)
+    while (!t2.length && !finished) {
+      t1 = random()
+      while (!t1.length && !finished) {
+        t1 = random()
+      }
+      t2 = random(t1)
+    }
+    if (!t2.length) {
+      return
+    }
     const h1: string[] = []
     const h2: string[] = []
     const roleNum = form.heroRules
