@@ -2,8 +2,6 @@ import { createRequire } from 'module';
 import { execSync } from 'child_process';
 import fs from 'fs';
 
-// import updatelog from './updatelog.mjs';
-
 const require = createRequire(import.meta.url);
 
 async function release() {
@@ -27,9 +25,6 @@ async function release() {
 
   const nextVersion = `${a}.${b}.${c}`;
   packageJson.version = nextVersion;
-
-  const nextTag = `v${nextVersion}`;
-  // await updatelog(nextTag, 'release');
 
   fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
 
