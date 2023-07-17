@@ -84,6 +84,9 @@ jobs:
       - name: Install rsw
         run: cargo install rsw
 
+      - name: Install dependencies
+        run: pnpm install
+
       # 安装依赖执行构建，以及推送 github release
       - uses: tauri-apps/tauri-action@v0
         env:
@@ -93,9 +96,9 @@ jobs:
         with:
           releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}
 
-      - name: Install app dependencies and build it
-        run: pnpm install && pnpm build:tauri
-        
+      - name: Build
+        run: pnpm build:tauri
+
   updater:
     runs-on: ubuntu-latest
     needs: [create-release, build-tauri]
