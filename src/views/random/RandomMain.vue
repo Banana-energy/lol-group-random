@@ -67,7 +67,7 @@
     </a-form-item>
   </a-form>
   <div class="flex ">
-    <a-list :bordered="false" :grid-props="{ gutter: 0, xs: 24, sm: 24, md: 24, lg: 1, xl: 12 }" class="w-1/2">
+    <a-list :bordered="false" :grid-props="{ gutter: 0, xs: 24, sm: 24, md: 24, lg: 12, xl: 12 }" class="w-1/2">
       <a-list-item>
         <a-list size="small">
           <template #header>
