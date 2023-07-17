@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center p-5">
+  <div class="flex justify-center px-5">
     <a-tabs v-model:active-key="activeKey" class="max-w-screen-lg">
       <a-tab-pane key="1" title="随机分组">
         <random-main
