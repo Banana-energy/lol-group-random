@@ -96,9 +96,6 @@ jobs:
         with:
           releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}
 
-      - name: Build
-        run: pnpm build:tauri
-
   updater:
     runs-on: ubuntu-latest
     needs: [create-release, build-tauri]
