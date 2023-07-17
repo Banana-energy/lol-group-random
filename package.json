@@ -7,6 +7,7 @@
     "build": "vite build",
     "dev:tauri": "tauri dev",
     "build:tauri": "tauri build",
+    "updater": "node scripts/updater.mjs",
     "release": "node scripts/release.mjs",
     "typecheck": "vue-tsc --noEmit",
     "preview": "vite preview",
@@ -28,6 +29,7 @@
     "vue-router": "^4.2.2"
   },
   "devDependencies": {
+    "@actions/github": "^5.1.1",
     "@arco-design/web-vue": "^2.48.0",
     "@commitlint/cli": "^16.3.0",
     "@commitlint/config-conventional": "^16.2.4",
@@ -45,6 +47,7 @@
     "eslint-plugin-vue": "^9.14.1",
     "husky": "^8.0.3",
     "lint-staged": "^11.2.6",
+    "node-fetch": "^3.3.1",
     "sass": "^1.62.1",
     "typescript": "^4.9.5",
     "unplugin-auto-import": "^0.16.4",
