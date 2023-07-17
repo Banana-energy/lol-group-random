@@ -1,12 +1,13 @@
 {
   "name": "vue-admin-template",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "dev:tauri": "tauri dev",
     "build:tauri": "tauri build",
+    "release": "node scripts/release.mjs",
     "typecheck": "vue-tsc --noEmit",
     "preview": "vite preview",
     "prepare": "husky install"
