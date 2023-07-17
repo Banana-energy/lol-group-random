@@ -1,7 +1,7 @@
 <template>
-  <div class="flex justify-center px-5">
+  <div class="flex justify-center">
     <a-tabs v-model:active-key="activeKey" class="max-w-screen-lg">
-      <a-tab-pane key="1" title="随机分组">
+      <a-tab-pane key="1" class="px-5" title="随机分组">
         <random-main
           :bind-graph="bindGraph"
           :enemy-graph="enemyGraph"
@@ -10,7 +10,7 @@
           :role-list="roleList"
         />
       </a-tab-pane>
-      <a-tab-pane key="2" title="添加玩家">
+      <a-tab-pane key="2" class="px-5" title="添加玩家">
         <add-player
           ref="addPlayer"
           :player-info="playerInfo"
@@ -18,7 +18,7 @@
           @add-player="handleAddPlayer"
         />
       </a-tab-pane>
-      <a-tab-pane key="3" title="英雄列表">
+      <a-tab-pane key="3" class="px-5" title="英雄列表">
         <hero-list :role-hero="roleHero" @add-hero="handleAddHero" @delete-hero="handleDelHero" />
       </a-tab-pane>
     </a-tabs>
