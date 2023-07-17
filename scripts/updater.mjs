@@ -34,14 +34,7 @@ async function updater() {
     notes: "", // use UPDATE_LOG.md
     pub_date: new Date().toISOString(),
     platforms: {
-      win64: { signature: '', url: '' }, // compatible with older formats
-      linux: { signature: '', url: '' }, // compatible with older formats
-      darwin: { signature: '', url: '' }, // compatible with older formats
-      'darwin-aarch64': { signature: '', url: '' },
-      'darwin-x86_64': { signature: '', url: '' },
-      'linux-x86_64': { signature: '', url: '' },
       'windows-x86_64': { signature: '', url: '' },
-      // 'windows-i686': { signature: '', url: '' }, // no supported
     },
   };
 
@@ -65,7 +58,7 @@ async function updater() {
 
   const promises = latestRelease.assets.map(async (asset) => {
     // windows
-    await setAsset(asset, /.msi.zip/, ['win64', 'windows-x86_64']);
+    await setAsset(asset, /.msi.zip/, ['windows-x86_64']);
   });
   await Promise.allSettled(promises);
 
