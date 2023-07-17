@@ -62,7 +62,7 @@ function initCallbacks(callbacks: IAlgorithmCallbacks = {} as IAlgorithmCallback
 }
 
 /**
- * @param {Graph} graph
+ * @param {GraphData} graphData
  * @param {GraphNode} currentNode
  * @param {GraphNode} previousNode
  * @param {Callbacks} callbacks
