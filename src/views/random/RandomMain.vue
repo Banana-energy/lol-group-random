@@ -1,133 +1,135 @@
 <template>
-  <a-form
-    ref="formRef"
-    :model="form"
-    :rules="rules"
-    layout="vertical"
-  >
-    <a-form-item field="model" label="模式选择">
-      <a-radio-group v-model="form.model">
-        <a-radio :value="5">5 v 5</a-radio>
-        <a-radio :value="4">4 v 4</a-radio>
-        <a-radio :value="3">3 v 3</a-radio>
-      </a-radio-group>
-    </a-form-item>
-    <a-form-item field="playerList" label="玩家选择">
-      <template #label>
-        <span>玩家选择</span>
-        <span v-if="!playerOptions.length" class="text-red-500">（请先添加玩家）</span>
-      </template>
-      <a-checkbox-group v-if="playerOptions.length" v-model="form.playerList" :options="playerOptions" />
-    </a-form-item>
-    <a-form-item field="heroPoolNum" label="英雄池数量">
-      <a-input-number
-        v-model="form.heroPoolNum"
-        :max="30"
-        :min="5"
-        placeholder="请输入英雄池数量"
-      />
-    </a-form-item>
-    <a-form-item class="!mb-0" field="heroRules" label="英雄池规则">
-      <a-form-item
-        v-for="item in roleList"
-        :key="item"
-        :label="item"
-        class="m-2"
-      >
+  <div>
+    <a-form
+      ref="formRef"
+      :model="form"
+      :rules="rules"
+      layout="vertical"
+    >
+      <a-form-item field="model" label="模式选择">
+        <a-radio-group v-model="form.model">
+          <a-radio :value="5">5 v 5</a-radio>
+          <a-radio :value="4">4 v 4</a-radio>
+          <a-radio :value="3">3 v 3</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item field="playerList" label="玩家选择">
+        <template #label>
+          <span>玩家选择</span>
+          <span v-if="!playerOptions.length" class="text-red-500">（请先添加玩家）</span>
+        </template>
+        <a-checkbox-group v-if="playerOptions.length" v-model="form.playerList" :options="playerOptions" />
+      </a-form-item>
+      <a-form-item field="heroPoolNum" label="英雄池数量">
         <a-input-number
-          v-model="form.heroRules[item]"
-          :max="5"
-          :min="1"
-          placeholder="请输入数量"
+          v-model="form.heroPoolNum"
+          :max="30"
+          :min="5"
+          placeholder="请输入英雄池数量"
         />
       </a-form-item>
-    </a-form-item>
-    <a-form-item>
-      <a-button type="primary" long @click="handleSubmit">
-        随机分组
-      </a-button>
-      <a-button
-        class="ml-2"
-        status="success"
-        type="primary"
-        long
-        @click="handleSaveDefaultConfig"
+      <a-form-item class="!mb-0" field="heroRules" label="英雄池规则">
+        <a-form-item
+          v-for="item in roleList"
+          :key="item"
+          :label="item"
+          class="m-2"
+        >
+          <a-input-number
+            v-model="form.heroRules[item]"
+            :max="5"
+            :min="1"
+            placeholder="请输入数量"
+          />
+        </a-form-item>
+      </a-form-item>
+      <a-form-item>
+        <a-button type="primary" long @click="handleSubmit">
+          随机分组
+        </a-button>
+        <a-button
+          class="ml-2"
+          status="success"
+          type="primary"
+          long
+          @click="handleSaveDefaultConfig"
+        >
+          保存为默认配置
+        </a-button>
+        <a-button
+          class="ml-2"
+          status="success"
+          type="primary"
+          long
+          @click="handleSaveHeroConfig"
+        >
+          保存英雄规则
+        </a-button>
+      </a-form-item>
+    </a-form>
+    <div class="flex ">
+      <a-list :bordered="false" :grid-props="{ gutter: 0, xs: 24, sm: 24, md: 24, lg: 12, xl: 12 }" class="w-1/2">
+        <a-list-item>
+          <a-list size="small">
+            <template #header>
+              队伍一
+            </template>
+            <a-list-item v-for="item in team1" :key="item">
+              {{ item }}
+            </a-list-item>
+          </a-list>
+        </a-list-item>
+        <a-list-item>
+          <a-list size="small">
+            <template #header>
+              队伍二
+            </template>
+            <a-list-item v-for="item in team2" :key="item">
+              {{ item }}
+            </a-list-item>
+          </a-list>
+        </a-list-item>
+      </a-list>
+      <a-split
+        :size="0.5"
+        class="w-1/2 border-gray-300 border"
+        min="80px"
+        style="margin: 13px 20px"
       >
-        保存为默认配置
-      </a-button>
-      <a-button
-        class="ml-2"
-        status="success"
-        type="primary"
-        long
-        @click="handleSaveHeroConfig"
-      >
-        保存英雄规则
-      </a-button>
-    </a-form-item>
-  </a-form>
-  <div class="flex ">
-    <a-list :bordered="false" :grid-props="{ gutter: 0, xs: 24, sm: 24, md: 24, lg: 12, xl: 12 }" class="w-1/2">
-      <a-list-item>
-        <a-list size="small">
-          <template #header>
-            队伍一
-          </template>
-          <a-list-item v-for="item in team1" :key="item">
-            {{ item }}
-          </a-list-item>
-        </a-list>
-      </a-list-item>
-      <a-list-item>
-        <a-list size="small">
-          <template #header>
-            队伍二
-          </template>
-          <a-list-item v-for="item in team2" :key="item">
-            {{ item }}
-          </a-list-item>
-        </a-list>
-      </a-list-item>
-    </a-list>
-    <a-split
-      :size="0.5"
-      class="w-1/2 border-gray-300 border"
-      min="80px"
-      style="margin: 13px 20px"
-    >
-      <template #first>
-        <a-typography-title :heading="6" class="px-2">
-          队伍一英雄
-        </a-typography-title>
-        <a-typography-paragraph class="px-2">
-          <a-tag
-            v-for="item in hero1"
-            :key="item"
-            class="m-0.5"
-            color="magenta"
-            bordered
-          >
-            {{ item }}
-          </a-tag>
-        </a-typography-paragraph>
-      </template>
-      <template #second>
-        <a-typography-title :heading="6" class="px-2">
-          队伍二英雄
-        </a-typography-title>
-        <a-typography-paragraph class="px-2">
-          <a-tag
-            v-for="item in hero2"
-            :key="item"
-            class="m-0.5"
-            color="green"
-            bordered
-          >
-            {{ item }}
-          </a-tag>
-        </a-typography-paragraph>
-      </template>
-    </a-split>
+        <template #first>
+          <a-typography-title :heading="6" class="px-2">
+            队伍一英雄
+          </a-typography-title>
+          <a-typography-paragraph class="px-2">
+            <a-tag
+              v-for="item in hero1"
+              :key="item"
+              class="m-0.5"
+              color="magenta"
+              bordered
+            >
+              {{ item }}
+            </a-tag>
+          </a-typography-paragraph>
+        </template>
+        <template #second>
+          <a-typography-title :heading="6" class="px-2">
+            队伍二英雄
+          </a-typography-title>
+          <a-typography-paragraph class="px-2">
+            <a-tag
+              v-for="item in hero2"
+              :key="item"
+              class="m-0.5"
+              color="green"
+              bordered
+            >
+              {{ item }}
+            </a-tag>
+          </a-typography-paragraph>
+        </template>
+      </a-split>
+    </div>
   </div>
 </template>
 

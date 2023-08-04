@@ -1,108 +1,116 @@
 <template>
-  <div v-if="roleHero">
-    <a-collapse>
-      <a-collapse-item v-for="(item, index) in Object.keys(roleHero)" :key="item" :header="item">
-        <a-scrollbar class="max-h-sm overflow-y-auto">
-          <a-tag
-            v-for="(hero) in roleHero[item]"
-            :key="hero"
-            :color="colorMap[item] || 'purple'"
+  <div class="flex flex-wrap mb-4">
+    <a-comment
+      v-for="item in heroList"
+      :key="item.name"
+      :author="item.name + '-' + item.title"
+      class="w-1/4 !my-2"
+    >
+      <template #content>
+        <div class="flex flex-wrap items-center">
+          <a-dropdown
+            v-for="role in item.roles"
+            :key="role"
             class="mt-2 mr-2"
-            closable
-            @close="handleClose(item, hero)"
+            @select="(val) => handleChangeRole(item.name, val)"
           >
-            {{ hero }}
-          </a-tag>
-          <a-input
-            v-show="showInput[index]"
-            ref="inputRef"
-            v-model.trim="inputVal"
-            class="!w-20 mt-2 arco-tag arco-tag-size-medium"
-            size="mini"
-            @blur="handleAdd(item, index)"
-            @keyup.enter="handleAdd(item, index)"
-          />
-          <a-tag
-            v-show="!showInput[index]"
-            class="cursor-pointer mt-2 mr-2"
-            color="blue"
-            @click="handleEdit(index)"
-          >
-            <template #icon>
-              <icon-plus />
+            <a-tag :color="colorMap[role]?.color || 'purple'" size="large" bordered>
+              <template #icon>
+                <icon :icon="colorMap[role]?.icon || 'vscode-icons:file-type-dockertest'" />
+              </template>
+              {{ role }}
+              <icon-down class="ml-1" />
+            </a-tag>
+            <a-badge v-if="!colorMap[role]" class="ml-2" text="NEW" />
+            <template #content>
+              <a-doption
+                v-for="roleOption in Object.keys(colorMap)"
+                :key="roleOption"
+                :disabled="role === roleOption"
+                class="w-auto !text-xl !leading-[2.5rem]"
+              >
+                <template #icon>
+                  <icon :icon="colorMap[roleOption].icon" />
+                </template>
+                <template #default>
+                  {{ roleOption }}
+                </template>
+              </a-doption>
             </template>
-            添加
-          </a-tag>
-        </a-scrollbar>
-      </a-collapse-item>
-    </a-collapse>
+          </a-dropdown>
+        </div>
+      </template>
+      <template #avatar>
+        <a-avatar>
+          <img :src="item.avatar" alt="avatar" />
+        </a-avatar>
+      </template>
+    </a-comment>
   </div>
 </template>
 
 <script setup lang="ts">
-import { InputInstance } from '@arco-design/web-vue';
-import { RoleHero } from './index.vue';
-import { IconPlus } from '@arco-design/web-vue/es/icon';
+import { HeroFile } from './index.vue';
+import { IconDown } from '@arco-design/web-vue/es/icon';
+import { Icon } from '@iconify/vue';
 
 const props = defineProps<{
-  roleHero: RoleHero
+  heroFile?: HeroFile
 }>()
 
 const emit = defineEmits<{
-  (e: 'add-hero', data: {
-    role: string,
-    name: string,
-  }): void
-  (e: 'delete-hero', data: {
+  (e: 'change-role', data: {
     role: string,
     name: string,
   }): void
 }>()
 
-const colorMap: { [key: string]: string } = {
-  法师: 'pinkpurple',
-  战士: 'orange',
-  坦克: 'orangered',
-  刺客: 'cyan',
-  射手: 'purple',
-}
-
-const inputRef = ref<InputInstance[]>([]);
-const showInput = ref<boolean[]>([]);
-const inputVal = ref('');
-
-onMounted(() => {
-  Object.keys(props.roleHero).forEach(() => {
-    showInput.value.push(false);
-  });
+const heroList = computed(() => {
+  return props.heroFile?.hero || []
 })
 
-const handleEdit = (index:number) => {
-  showInput.value[index] = true;
+const colorMap: { [key: string]: { color: string, icon: string } } = {
+  法师: {
+    color: 'pinkpurple',
+    icon: 'vscode-icons:file-type-composer',
+  },
+  战士: {
+    color: 'orange',
+    icon: 'vscode-icons:file-type-cobol',
+  },
+  坦克: {
+    color: 'orangered',
+    icon: 'vscode-icons:file-type-grunt',
+  },
+  刺客: {
+    color: 'cyan',
+    icon: 'vscode-icons:file-type-light-objidconfig',
+  },
+  射手: {
+    color: 'purple',
+    icon: 'vscode-icons:file-type-haml',
+  },
+}
 
-  nextTick(() => {
-    if (inputRef.value) {
-      inputRef.value?.[index].focus();
-    }
-  });
-};
-
-const handleAdd = (role: string, index: number) => {
-  if (inputVal.value) {
-    emit('add-hero', {
-      role,
-      name: inputVal.value,
-    })
-    inputVal.value = '';
-  }
-  showInput.value[index] = false;
-};
-
-const handleClose = (role: string, hero: string) => {
-  emit('delete-hero', {
-    role,
-    name: hero,
+const handleChangeRole = (name: string, role?: string | number | Record<string, any>) => {
+  emit('change-role', {
+    name,
+    role: role as string,
   })
-};
+}
 
 </script>
+
+<style scoped>
+:deep(.arco-tag-icon) {
+  display: flex;
+}
+
+.arco-icon-down {
+  transition: transform .3s, -webkit-transform .3s;
+}
+
+.arco-dropdown-open .arco-icon-down {
+  transform: rotate(180deg);
+}
+</style>

@@ -1,33 +1,35 @@
 <template>
-  <a-form
-    ref="formRef"
-    :model="form"
-    :rules="rules"
-    layout="vertical"
-  >
-    <a-form-item field="name" label="玩家名称">
-      <a-input
-        v-model.trim="form.name"
-        placeholder="请输入玩家名称（按回车添加）"
-        allow-clear
-        @keydown.enter="handleSubmit"
-      />
-    </a-form-item>
-  </a-form>
-  <div ref="container" class="w-full h-lg mt-4"></div>
-  <a-menu v-if="showMenu" ref="contextmenu" :default-open-keys="['0']">
-    <a-menu-item key="0_0_0" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
-      删除
-    </a-menu-item>
-    <a-divider :margin="5" />
-    <a-menu-item key="0_0_1" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
-      绑定
-    </a-menu-item>
-    <a-divider :margin="5" />
-    <a-menu-item key="0_0_2" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
-      敌对
-    </a-menu-item>
-  </a-menu>
+  <div>
+    <a-form
+      ref="formRef"
+      :model="form"
+      :rules="rules"
+      layout="vertical"
+    >
+      <a-form-item field="name" label="玩家名称">
+        <a-input
+          v-model.trim="form.name"
+          placeholder="请输入玩家名称（按回车添加）"
+          allow-clear
+          @keydown.enter="handleSubmit"
+        />
+      </a-form-item>
+    </a-form>
+    <div ref="container" class="w-full h-lg mt-4"></div>
+    <a-menu v-if="showMenu" ref="contextmenu" :default-open-keys="['0']">
+      <a-menu-item key="0_0_0" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
+        删除
+      </a-menu-item>
+      <a-divider :margin="5" />
+      <a-menu-item key="0_0_1" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
+        绑定
+      </a-menu-item>
+      <a-divider :margin="5" />
+      <a-menu-item key="0_0_2" class="!hover:bg-red-500 !hover:text-white !leading-6 !mb-0" data-obj="1">
+        敌对
+      </a-menu-item>
+    </a-menu>
+  </div>
 </template>
 
 <script setup lang="ts">
