@@ -1,7 +1,7 @@
 {
   "hero": [
     {
-      "name": "黑暗之女-安妮",
+      "name": "黑暗之女",
       "title": "安妮",
       "roles": [
         "法师"
@@ -9,7 +9,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Annie.png"
     },
     {
-      "name": "狂战士-奥拉夫",
+      "name": "狂战士",
       "title": "奥拉夫",
       "roles": [
         "战士"
@@ -17,7 +17,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Olaf.png"
     },
     {
-      "name": "正义巨像-加里奥",
+      "name": "正义巨像",
       "title": "加里奥",
       "roles": [
         "坦克"
@@ -25,7 +25,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Galio.png"
     },
     {
-      "name": "卡牌大师-崔斯特",
+      "name": "卡牌大师",
       "title": "崔斯特",
       "roles": [
         "法师"
@@ -33,7 +33,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/TwistedFate.png"
     },
     {
-      "name": "德邦总管-赵信",
+      "name": "德邦总管",
       "title": "赵信",
       "roles": [
         "战士"
@@ -41,7 +41,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/XinZhao.png"
     },
     {
-      "name": "无畏战车-厄加特",
+      "name": "无畏战车",
       "title": "厄加特",
       "roles": [
         "战士"
@@ -49,7 +49,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Urgot.png"
     },
     {
-      "name": "诡术妖姬-乐芙兰",
+      "name": "诡术妖姬",
       "title": "乐芙兰",
       "roles": [
         "刺客"
@@ -57,7 +57,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Leblanc.png"
     },
     {
-      "name": "猩红收割者-弗拉基米尔",
+      "name": "猩红收割者",
       "title": "弗拉基米尔",
       "roles": [
         "法师"
@@ -65,7 +65,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Vladimir.png"
     },
     {
-      "name": "远古恐惧-费德提克",
+      "name": "远古恐惧",
       "title": "费德提克",
       "roles": [
         "法师"
@@ -73,7 +73,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/FiddleSticks.png"
     },
     {
-      "name": "正义天使-凯尔",
+      "name": "正义天使",
       "title": "凯尔",
       "roles": [
         "射手"
@@ -81,7 +81,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Kayle.png"
     },
     {
-      "name": "无极剑圣-易",
+      "name": "无极剑圣",
       "title": "易",
       "roles": [
         "刺客"
@@ -89,7 +89,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/MasterYi.png"
     },
     {
-      "name": "牛头酋长-阿利斯塔",
+      "name": "牛头酋长",
       "title": "阿利斯塔",
       "roles": [
         "坦克"
@@ -97,7 +97,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Alistar.png"
     },
     {
-      "name": "符文法师-瑞兹",
+      "name": "符文法师",
       "title": "瑞兹",
       "roles": [
         "法师"
@@ -105,7 +105,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Ryze.png"
     },
     {
-      "name": "亡灵战神-赛恩",
+      "name": "亡灵战神",
       "title": "赛恩",
       "roles": [
         "坦克"
@@ -113,7 +113,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Sion.png"
     },
     {
-      "name": "战争女神-希维尔",
+      "name": "战争女神",
       "title": "希维尔",
       "roles": [
         "射手"
@@ -121,7 +121,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Sivir.png"
     },
     {
-      "name": "众星之子-索拉卡",
+      "name": "众星之子",
       "title": "索拉卡",
       "roles": [
         "法师"
@@ -129,7 +129,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Soraka.png"
     },
     {
-      "name": "迅捷斥候-提莫",
+      "name": "迅捷斥候",
       "title": "提莫",
       "roles": [
         "法师"
@@ -137,7 +137,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Teemo.png"
     },
     {
-      "name": "麦林炮手-崔丝塔娜",
+      "name": "麦林炮手",
       "title": "崔丝塔娜",
       "roles": [
         "射手"
@@ -145,7 +145,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Tristana.png"
     },
     {
-      "name": "祖安怒兽-沃里克",
+      "name": "祖安怒兽",
       "title": "沃里克",
       "roles": [
         "战士"
@@ -153,7 +153,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Warwick.png"
     },
     {
-      "name": "雪原双子-努努和威朗普",
+      "name": "雪原双子",
       "title": "努努和威朗普",
       "roles": [
         "法师"
@@ -161,7 +161,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Nunu.png"
     },
     {
-      "name": "赏金猎人-厄运小姐",
+      "name": "赏金猎人",
       "title": "厄运小姐",
       "roles": [
         "射手"
@@ -169,7 +169,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/MissFortune.png"
     },
     {
-      "name": "寒冰射手-艾希",
+      "name": "寒冰射手",
       "title": "艾希",
       "roles": [
         "射手"
@@ -177,7 +177,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Ashe.png"
     },
     {
-      "name": "蛮族之王-泰达米尔",
+      "name": "蛮族之王",
       "title": "泰达米尔",
       "roles": [
         "战士"
@@ -185,7 +185,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Tryndamere.png"
     },
     {
-      "name": "武器大师-贾克斯",
+      "name": "武器大师",
       "title": "贾克斯",
       "roles": [
         "战士"
@@ -193,7 +193,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Jax.png"
     },
     {
-      "name": "堕落天使-莫甘娜",
+      "name": "堕落天使",
       "title": "莫甘娜",
       "roles": [
         "法师"
@@ -201,7 +201,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Morgana.png"
     },
     {
-      "name": "时光守护者-基兰",
+      "name": "时光守护者",
       "title": "基兰",
       "roles": [
         "法师"
@@ -209,7 +209,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Zilean.png"
     },
     {
-      "name": "炼金术士-辛吉德",
+      "name": "炼金术士",
       "title": "辛吉德",
       "roles": [
         "坦克"
@@ -217,7 +217,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Singed.png"
     },
     {
-      "name": "痛苦之拥-伊芙琳",
+      "name": "痛苦之拥",
       "title": "伊芙琳",
       "roles": [
         "刺客"
@@ -225,7 +225,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Evelynn.png"
     },
     {
-      "name": "瘟疫之源-图奇",
+      "name": "瘟疫之源",
       "title": "图奇",
       "roles": [
         "射手"
@@ -233,7 +233,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Twitch.png"
     },
     {
-      "name": "死亡颂唱者-卡尔萨斯",
+      "name": "死亡颂唱者",
       "title": "卡尔萨斯",
       "roles": [
         "法师"
@@ -241,7 +241,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Karthus.png"
     },
     {
-      "name": "虚空恐惧-科加斯",
+      "name": "虚空恐惧",
       "title": "科加斯",
       "roles": [
         "坦克"
@@ -249,7 +249,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Chogath.png"
     },
     {
-      "name": "殇之木乃伊-阿木木",
+      "name": "殇之木乃伊",
       "title": "阿木木",
       "roles": [
         "坦克"
@@ -257,7 +257,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Amumu.png"
     },
     {
-      "name": "披甲龙龟-拉莫斯",
+      "name": "披甲龙龟",
       "title": "拉莫斯",
       "roles": [
         "坦克"
@@ -265,7 +265,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Rammus.png"
     },
     {
-      "name": "冰晶凤凰-艾尼维亚",
+      "name": "冰晶凤凰",
       "title": "艾尼维亚",
       "roles": [
         "法师"
@@ -273,7 +273,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Anivia.png"
     },
     {
-      "name": "恶魔小丑-萨科",
+      "name": "恶魔小丑",
       "title": "萨科",
       "roles": [
         "法师"
@@ -281,7 +281,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Shaco.png"
     },
     {
-      "name": "祖安狂人-蒙多医生",
+      "name": "祖安狂人",
       "title": "蒙多医生",
       "roles": [
         "坦克"
@@ -289,7 +289,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/DrMundo.png"
     },
     {
-      "name": "琴瑟仙女-娑娜",
+      "name": "琴瑟仙女",
       "title": "娑娜",
       "roles": [
         "法师"
@@ -297,7 +297,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Sona.png"
     },
     {
-      "name": "虚空行者-卡萨丁",
+      "name": "虚空行者",
       "title": "卡萨丁",
       "roles": [
         "刺客"
@@ -305,7 +305,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Kassadin.png"
     },
     {
-      "name": "刀锋舞者-艾瑞莉娅",
+      "name": "刀锋舞者",
       "title": "艾瑞莉娅",
       "roles": [
         "战士"
@@ -313,7 +313,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Irelia.png"
     },
     {
-      "name": "风暴之怒-迦娜",
+      "name": "风暴之怒",
       "title": "迦娜",
       "roles": [
         "法师"
@@ -321,7 +321,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Janna.png"
     },
     {
-      "name": "海洋之灾-普朗克",
+      "name": "海洋之灾",
       "title": "普朗克",
       "roles": [
         "战士"
@@ -329,7 +329,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Gangplank.png"
     },
     {
-      "name": "英勇投弹手-库奇",
+      "name": "英勇投弹手",
       "title": "库奇",
       "roles": [
         "射手"
@@ -337,7 +337,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Corki.png"
     },
     {
-      "name": "天启者-卡尔玛",
+      "name": "天启者",
       "title": "卡尔玛",
       "roles": [
         "法师"
@@ -345,7 +345,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Karma.png"
     },
     {
-      "name": "瓦洛兰之盾-塔里克",
+      "name": "瓦洛兰之盾",
       "title": "塔里克",
       "roles": [
         "坦克"
@@ -353,7 +353,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Taric.png"
     },
     {
-      "name": "邪恶小法师-维迦",
+      "name": "邪恶小法师",
       "title": "维迦",
       "roles": [
         "法师"
@@ -361,7 +361,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Veigar.png"
     },
     {
-      "name": "巨魔之王-特朗德尔",
+      "name": "巨魔之王",
       "title": "特朗德尔",
       "roles": [
         "战士"
@@ -369,7 +369,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Trundle.png"
     },
     {
-      "name": "诺克萨斯统领-斯维因",
+      "name": "诺克萨斯统领",
       "title": "斯维因",
       "roles": [
         "法师"
@@ -377,7 +377,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Swain.png"
     },
     {
-      "name": "皮城女警-凯特琳",
+      "name": "皮城女警",
       "title": "凯特琳",
       "roles": [
         "射手"
@@ -385,7 +385,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Caitlyn.png"
     },
     {
-      "name": "蒸汽机器人-布里茨",
+      "name": "蒸汽机器人",
       "title": "布里茨",
       "roles": [
         "坦克"
@@ -393,7 +393,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Blitzcrank.png"
     },
     {
-      "name": "熔岩巨兽-墨菲特",
+      "name": "熔岩巨兽",
       "title": "墨菲特",
       "roles": [
         "法师"
@@ -401,7 +401,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Malphite.png"
     },
     {
-      "name": "不祥之刃-卡特琳娜",
+      "name": "不祥之刃",
       "title": "卡特琳娜",
       "roles": [
         "刺客"
@@ -409,7 +409,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Katarina.png"
     },
     {
-      "name": "永恒梦魇-魔腾",
+      "name": "永恒梦魇",
       "title": "魔腾",
       "roles": [
         "刺客"
@@ -417,7 +417,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Nocturne.png"
     },
     {
-      "name": "扭曲树精-茂凯",
+      "name": "扭曲树精",
       "title": "茂凯",
       "roles": [
         "坦克"
@@ -425,7 +425,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Maokai.png"
     },
     {
-      "name": "荒漠屠夫-雷克顿",
+      "name": "荒漠屠夫",
       "title": "雷克顿",
       "roles": [
         "战士"
@@ -433,7 +433,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Renekton.png"
     },
     {
-      "name": "德玛西亚皇子-嘉文四世",
+      "name": "德玛西亚皇子",
       "title": "嘉文四世",
       "roles": [
         "战士"
@@ -441,7 +441,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/JarvanIV.png"
     },
     {
-      "name": "蜘蛛女皇-伊莉丝",
+      "name": "蜘蛛女皇",
       "title": "伊莉丝",
       "roles": [
         "刺客"
@@ -449,7 +449,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Elise.png"
     },
     {
-      "name": "发条魔灵-奥莉安娜",
+      "name": "发条魔灵",
       "title": "奥莉安娜",
       "roles": [
         "法师"
@@ -457,7 +457,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Orianna.png"
     },
     {
-      "name": "齐天大圣-孙悟空",
+      "name": "齐天大圣",
       "title": "孙悟空",
       "roles": [
         "战士"
@@ -465,7 +465,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/MonkeyKing.png"
     },
     {
-      "name": "复仇焰魂-布兰德",
+      "name": "复仇焰魂",
       "title": "布兰德",
       "roles": [
         "法师"
@@ -473,7 +473,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Brand.png"
     },
     {
-      "name": "盲僧-李青",
+      "name": "盲僧",
       "title": "李青",
       "roles": [
         "战士"
@@ -481,7 +481,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/LeeSin.png"
     },
     {
-      "name": "暗夜猎手-薇恩",
+      "name": "暗夜猎手",
       "title": "薇恩",
       "roles": [
         "射手"
@@ -489,7 +489,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Vayne.png"
     },
     {
-      "name": "机械公敌-兰博",
+      "name": "机械公敌",
       "title": "兰博",
       "roles": [
         "法师"
@@ -497,7 +497,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Rumble.png"
     },
     {
-      "name": "魔蛇之拥-卡西奥佩娅",
+      "name": "魔蛇之拥",
       "title": "卡西奥佩娅",
       "roles": [
         "法师"
@@ -505,7 +505,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Cassiopeia.png"
     },
     {
-      "name": "水晶先锋-斯卡纳",
+      "name": "水晶先锋",
       "title": "斯卡纳",
       "roles": [
         "坦克"
@@ -513,7 +513,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Skarner.png"
     },
     {
-      "name": "大发明家-黑默丁格",
+      "name": "大发明家",
       "title": "黑默丁格",
       "roles": [
         "法师"
@@ -521,7 +521,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Heimerdinger.png"
     },
     {
-      "name": "沙漠死神-内瑟斯",
+      "name": "沙漠死神",
       "title": "内瑟斯",
       "roles": [
         "战士"
@@ -529,7 +529,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Nasus.png"
     },
     {
-      "name": "狂野女猎手-奈德丽",
+      "name": "狂野女猎手",
       "title": "奈德丽",
       "roles": [
         "刺客"
@@ -537,7 +537,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Nidalee.png"
     },
     {
-      "name": "兽灵行者-乌迪尔",
+      "name": "兽灵行者",
       "title": "乌迪尔",
       "roles": [
         "法师"
@@ -545,7 +545,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Udyr.png"
     },
     {
-      "name": "圣锤之毅-波比",
+      "name": "圣锤之毅",
       "title": "波比",
       "roles": [
         "坦克"
@@ -553,7 +553,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Poppy.png"
     },
     {
-      "name": "酒桶-古拉加斯",
+      "name": "酒桶",
       "title": "古拉加斯",
       "roles": [
         "法师"
@@ -561,7 +561,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Gragas.png"
     },
     {
-      "name": "不屈之枪-潘森",
+      "name": "不屈之枪",
       "title": "潘森",
       "roles": [
         "战士"
@@ -569,7 +569,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Pantheon.png"
     },
     {
-      "name": "探险家-伊泽瑞尔",
+      "name": "探险家",
       "title": "伊泽瑞尔",
       "roles": [
         "射手"
@@ -577,7 +577,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Ezreal.png"
     },
     {
-      "name": "铁铠冥魂-莫德凯撒",
+      "name": "铁铠冥魂",
       "title": "莫德凯撒",
       "roles": [
         "法师"
@@ -585,7 +585,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Mordekaiser.png"
     },
     {
-      "name": "牧魂人-约里克",
+      "name": "牧魂人",
       "title": "约里克",
       "roles": [
         "战士"
@@ -593,7 +593,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Yorick.png"
     },
     {
-      "name": "离群之刺-阿卡丽",
+      "name": "离群之刺",
       "title": "阿卡丽",
       "roles": [
         "刺客"
@@ -601,7 +601,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Akali.png"
     },
     {
-      "name": "狂暴之心-凯南",
+      "name": "狂暴之心",
       "title": "凯南",
       "roles": [
         "法师"
@@ -609,7 +609,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Kennen.png"
     },
     {
-      "name": "德玛西亚之力-盖伦",
+      "name": "德玛西亚之力",
       "title": "盖伦",
       "roles": [
         "战士"
@@ -617,7 +617,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Garen.png"
     },
     {
-      "name": "曙光女神-蕾欧娜",
+      "name": "曙光女神",
       "title": "蕾欧娜",
       "roles": [
         "坦克"
@@ -625,7 +625,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Leona.png"
     },
     {
-      "name": "虚空先知-玛尔扎哈",
+      "name": "虚空先知",
       "title": "玛尔扎哈",
       "roles": [
         "法师"
@@ -633,7 +633,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Malzahar.png"
     },
     {
-      "name": "刀锋之影-泰隆",
+      "name": "刀锋之影",
       "title": "泰隆",
       "roles": [
         "刺客"
@@ -641,7 +641,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Talon.png"
     },
     {
-      "name": "放逐之刃-锐雯",
+      "name": "放逐之刃",
       "title": "锐雯",
       "roles": [
         "战士"
@@ -649,7 +649,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Riven.png"
     },
     {
-      "name": "深渊巨口-克格莫",
+      "name": "深渊巨口",
       "title": "克格莫",
       "roles": [
         "射手"
@@ -657,7 +657,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/KogMaw.png"
     },
     {
-      "name": "暮光之眼-慎",
+      "name": "暮光之眼",
       "title": "慎",
       "roles": [
         "坦克"
@@ -665,7 +665,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Shen.png"
     },
     {
-      "name": "光辉女郎-拉克丝",
+      "name": "光辉女郎",
       "title": "拉克丝",
       "roles": [
         "法师"
@@ -673,7 +673,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Lux.png"
     },
     {
-      "name": "远古巫灵-泽拉斯",
+      "name": "远古巫灵",
       "title": "泽拉斯",
       "roles": [
         "法师"
@@ -681,7 +681,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Xerath.png"
     },
     {
-      "name": "龙血武姬-希瓦娜",
+      "name": "龙血武姬",
       "title": "希瓦娜",
       "roles": [
         "法师"
@@ -689,7 +689,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Shyvana.png"
     },
     {
-      "name": "九尾妖狐-阿狸",
+      "name": "九尾妖狐",
       "title": "阿狸",
       "roles": [
         "刺客"
@@ -697,7 +697,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Ahri.png"
     },
     {
-      "name": "法外狂徒-格雷福斯",
+      "name": "法外狂徒",
       "title": "格雷福斯",
       "roles": [
         "战士"
@@ -705,7 +705,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Graves.png"
     },
     {
-      "name": "潮汐海灵-菲兹",
+      "name": "潮汐海灵",
       "title": "菲兹",
       "roles": [
         "刺客"
@@ -713,7 +713,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Fizz.png"
     },
     {
-      "name": "不灭狂雷-沃利贝尔",
+      "name": "不灭狂雷",
       "title": "沃利贝尔",
       "roles": [
         "战士"
@@ -721,7 +721,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Volibear.png"
     },
     {
-      "name": "傲之追猎者-雷恩加尔",
+      "name": "傲之追猎者",
       "title": "雷恩加尔",
       "roles": [
         "刺客"
@@ -729,7 +729,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Rengar.png"
     },
     {
-      "name": "惩戒之箭-韦鲁斯",
+      "name": "惩戒之箭",
       "title": "韦鲁斯",
       "roles": [
         "射手"
@@ -737,7 +737,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Varus.png"
     },
     {
-      "name": "深海泰坦-诺提勒斯",
+      "name": "深海泰坦",
       "title": "诺提勒斯",
       "roles": [
         "坦克"
@@ -745,7 +745,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Nautilus.png"
     },
     {
-      "name": "机械先驱-维克托",
+      "name": "机械先驱",
       "title": "维克托",
       "roles": [
         "法师"
@@ -753,7 +753,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Viktor.png"
     },
     {
-      "name": "北地之怒-瑟庄妮",
+      "name": "北地之怒",
       "title": "瑟庄妮",
       "roles": [
         "坦克"
@@ -761,7 +761,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Sejuani.png"
     },
     {
-      "name": "无双剑姬-菲奥娜",
+      "name": "无双剑姬",
       "title": "菲奥娜",
       "roles": [
         "战士"
@@ -769,7 +769,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Fiora.png"
     },
     {
-      "name": "爆破鬼才-吉格斯",
+      "name": "爆破鬼才",
       "title": "吉格斯",
       "roles": [
         "法师"
@@ -777,7 +777,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Ziggs.png"
     },
     {
-      "name": "仙灵女巫-璐璐",
+      "name": "仙灵女巫",
       "title": "璐璐",
       "roles": [
         "法师"
@@ -785,7 +785,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Lulu.png"
     },
     {
-      "name": "荣耀行刑官-德莱文",
+      "name": "荣耀行刑官",
       "title": "德莱文",
       "roles": [
         "射手"
@@ -793,7 +793,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Draven.png"
     },
     {
-      "name": "战争之影-赫卡里姆",
+      "name": "战争之影",
       "title": "赫卡里姆",
       "roles": [
         "战士"
@@ -801,7 +801,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Hecarim.png"
     },
     {
-      "name": "虚空掠夺者-卡兹克",
+      "name": "虚空掠夺者",
       "title": "卡兹克",
       "roles": [
         "刺客"
@@ -809,7 +809,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Khazix.png"
     },
     {
-      "name": "诺克萨斯之手-德莱厄斯",
+      "name": "诺克萨斯之手",
       "title": "德莱厄斯",
       "roles": [
         "战士"
@@ -817,7 +817,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Darius.png"
     },
     {
-      "name": "未来守护者-杰斯",
+      "name": "未来守护者",
       "title": "杰斯",
       "roles": [
         "战士"
@@ -825,7 +825,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Jayce.png"
     },
     {
-      "name": "冰霜女巫-丽桑卓",
+      "name": "冰霜女巫",
       "title": "丽桑卓",
       "roles": [
         "法师"
@@ -833,7 +833,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Lissandra.png"
     },
     {
-      "name": "皎月女神-黛安娜",
+      "name": "皎月女神",
       "title": "黛安娜",
       "roles": [
         "刺客"
@@ -841,7 +841,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Diana.png"
     },
     {
-      "name": "德玛西亚之翼-奎因",
+      "name": "德玛西亚之翼",
       "title": "奎因",
       "roles": [
         "射手"
@@ -849,7 +849,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Quinn.png"
     },
     {
-      "name": "暗黑元首-辛德拉",
+      "name": "暗黑元首",
       "title": "辛德拉",
       "roles": [
         "法师"
@@ -857,7 +857,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Syndra.png"
     },
     {
-      "name": "铸星龙王-奥瑞利安索尔",
+      "name": "铸星龙王",
       "title": "奥瑞利安索尔",
       "roles": [
         "法师"
@@ -865,7 +865,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/AurelionSol.png"
     },
     {
-      "name": "影流之镰-凯隐",
+      "name": "影流之镰",
       "title": "凯隐",
       "roles": [
         "刺客"
@@ -873,7 +873,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Kayn.png"
     },
     {
-      "name": "暮光星灵-佐伊",
+      "name": "暮光星灵",
       "title": "佐伊",
       "roles": [
         "法师"
@@ -881,7 +881,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Zoe.png"
     },
     {
-      "name": "荆棘之兴-婕拉",
+      "name": "荆棘之兴",
       "title": "婕拉",
       "roles": [
         "法师"
@@ -889,7 +889,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Zyra.png"
     },
     {
-      "name": "虚空之女-卡莎",
+      "name": "虚空之女",
       "title": "卡莎",
       "roles": [
         "射手"
@@ -897,7 +897,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Kaisa.png"
     },
     {
-      "name": "星籁歌姬-萨勒芬妮",
+      "name": "星籁歌姬",
       "title": "萨勒芬妮",
       "roles": [
         "法师"
@@ -905,7 +905,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Seraphine.png"
     },
     {
-      "name": "迷失之牙-纳尔",
+      "name": "迷失之牙",
       "title": "纳尔",
       "roles": [
         "战士"
@@ -913,7 +913,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Gnar.png"
     },
     {
-      "name": "生化魔人-扎克",
+      "name": "生化魔人",
       "title": "扎克",
       "roles": [
         "坦克"
@@ -921,7 +921,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Zac.png"
     },
     {
-      "name": "疾风剑豪-亚索",
+      "name": "疾风剑豪",
       "title": "亚索",
       "roles": [
         "战士"
@@ -929,7 +929,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Yasuo.png"
     },
     {
-      "name": "虚空之眼-维克兹",
+      "name": "虚空之眼",
       "title": "维克兹",
       "roles": [
         "法师"
@@ -937,7 +937,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Velkoz.png"
     },
     {
-      "name": "岩雀-塔莉垭",
+      "name": "岩雀",
       "title": "塔莉垭",
       "roles": [
         "法师"
@@ -945,7 +945,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Taliyah.png"
     },
     {
-      "name": "青钢影-卡蜜尔",
+      "name": "青钢影",
       "title": "卡蜜尔",
       "roles": [
         "战士"
@@ -953,7 +953,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Camille.png"
     },
     {
-      "name": "影哨-阿克尚",
+      "name": "影哨",
       "title": "阿克尚",
       "roles": [
         "射手"
@@ -961,7 +961,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Akshan.png"
     },
     {
-      "name": "虚空女皇-卑尔维斯",
+      "name": "虚空女皇",
       "title": "卑尔维斯",
       "roles": [
         "战士"
@@ -969,7 +969,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Belveth.png"
     },
     {
-      "name": "弗雷尔卓德之心-布隆",
+      "name": "弗雷尔卓德之心",
       "title": "布隆",
       "roles": [
         "坦克"
@@ -977,7 +977,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Braum.png"
     },
     {
-      "name": "戏命师-烬",
+      "name": "戏命师",
       "title": "烬",
       "roles": [
         "射手"
@@ -985,7 +985,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Jhin.png"
     },
     {
-      "name": "永猎双子-千珏",
+      "name": "永猎双子",
       "title": "千珏",
       "roles": [
         "射手"
@@ -993,7 +993,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Kindred.png"
     },
     {
-      "name": "祖安花火-泽丽",
+      "name": "祖安花火",
       "title": "泽丽",
       "roles": [
         "射手"
@@ -1001,7 +1001,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Zeri.png"
     },
     {
-      "name": "暴走萝莉-金克丝",
+      "name": "暴走萝莉",
       "title": "金克丝",
       "roles": [
         "射手"
@@ -1009,7 +1009,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Jinx.png"
     },
     {
-      "name": "河流之王-塔姆",
+      "name": "河流之王",
       "title": "塔姆",
       "roles": [
         "坦克"
@@ -1017,7 +1017,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/TahmKench.png"
     },
     {
-      "name": "破败之王-佛耶戈",
+      "name": "破败之王",
       "title": "佛耶戈",
       "roles": [
         "战士"
@@ -1025,7 +1025,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Viego.png"
     },
     {
-      "name": "涤魂圣枪-赛娜",
+      "name": "涤魂圣枪",
       "title": "赛娜",
       "roles": [
         "射手"
@@ -1033,7 +1033,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Senna.png"
     },
     {
-      "name": "圣枪游侠-卢锡安",
+      "name": "圣枪游侠",
       "title": "卢锡安",
       "roles": [
         "射手"
@@ -1041,7 +1041,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Lucian.png"
     },
     {
-      "name": "影流之主-劫",
+      "name": "影流之主",
       "title": "劫",
       "roles": [
         "刺客"
@@ -1049,7 +1049,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Zed.png"
     },
     {
-      "name": "暴怒骑士-克烈",
+      "name": "暴怒骑士",
       "title": "克烈",
       "roles": [
         "战士"
@@ -1057,7 +1057,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Kled.png"
     },
     {
-      "name": "时间刺客-艾克",
+      "name": "时间刺客",
       "title": "艾克",
       "roles": [
         "刺客"
@@ -1065,7 +1065,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Ekko.png"
     },
     {
-      "name": "元素女皇-奇亚娜",
+      "name": "元素女皇",
       "title": "奇亚娜",
       "roles": [
         "刺客"
@@ -1073,7 +1073,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Qiyana.png"
     },
     {
-      "name": "皮城执法官-蔚",
+      "name": "皮城执法官",
       "title": "蔚",
       "roles": [
         "战士"
@@ -1081,7 +1081,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Vi.png"
     },
     {
-      "name": "暗裔剑魔-亚托克斯",
+      "name": "暗裔剑魔",
       "title": "亚托克斯",
       "roles": [
         "战士"
@@ -1089,7 +1089,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Aatrox.png"
     },
     {
-      "name": "唤潮鲛姬-娜美",
+      "name": "唤潮鲛姬",
       "title": "娜美",
       "roles": [
         "法师"
@@ -1097,7 +1097,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Nami.png"
     },
     {
-      "name": "沙漠皇帝-阿兹尔",
+      "name": "沙漠皇帝",
       "title": "阿兹尔",
       "roles": [
         "法师"
@@ -1105,7 +1105,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Azir.png"
     },
     {
-      "name": "魔法猫咪-悠米",
+      "name": "魔法猫咪",
       "title": "悠米",
       "roles": [
         "法师"
@@ -1113,7 +1113,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Yuumi.png"
     },
     {
-      "name": "沙漠玫瑰-莎弥拉",
+      "name": "沙漠玫瑰",
       "title": "莎弥拉",
       "roles": [
         "射手"
@@ -1121,7 +1121,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Samira.png"
     },
     {
-      "name": "魂锁典狱长-锤石",
+      "name": "魂锁典狱长",
       "title": "锤石",
       "roles": [
         "坦克"
@@ -1129,7 +1129,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Thresh.png"
     },
     {
-      "name": "海兽祭司-俄洛伊",
+      "name": "海兽祭司",
       "title": "俄洛伊",
       "roles": [
         "战士"
@@ -1137,7 +1137,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Illaoi.png"
     },
     {
-      "name": "虚空遁地兽-雷克塞",
+      "name": "虚空遁地兽",
       "title": "雷克塞",
       "roles": [
         "战士"
@@ -1145,7 +1145,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/RekSai.png"
     },
     {
-      "name": "翠神-艾翁",
+      "name": "翠神",
       "title": "艾翁",
       "roles": [
         "法师"
@@ -1153,7 +1153,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Ivern.png"
     },
     {
-      "name": "复仇之矛-卡莉丝塔",
+      "name": "复仇之矛",
       "title": "卡莉丝塔",
       "roles": [
         "射手"
@@ -1161,7 +1161,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Kalista.png"
     },
     {
-      "name": "星界游神-巴德",
+      "name": "星界游神",
       "title": "巴德",
       "roles": [
         "法师"
@@ -1169,7 +1169,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Bard.png"
     },
     {
-      "name": "幻翎-洛",
+      "name": "幻翎",
       "title": "洛",
       "roles": [
         "坦克"
@@ -1177,7 +1177,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Rakan.png"
     },
     {
-      "name": "逆羽-霞",
+      "name": "逆羽",
       "title": "霞",
       "roles": [
         "射手"
@@ -1185,7 +1185,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Xayah.png"
     },
     {
-      "name": "山隐之焰-奥恩",
+      "name": "山隐之焰",
       "title": "奥恩",
       "roles": [
         "坦克"
@@ -1193,7 +1193,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Ornn.png"
     },
     {
-      "name": "解脱者-塞拉斯",
+      "name": "解脱者",
       "title": "塞拉斯",
       "roles": [
         "战士"
@@ -1201,7 +1201,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Sylas.png"
     },
     {
-      "name": "万花通灵-妮蔻",
+      "name": "万花通灵",
       "title": "妮蔻",
       "roles": [
         "法师"
@@ -1209,7 +1209,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Neeko.png"
     },
     {
-      "name": "残月之肃-厄斐琉斯",
+      "name": "残月之肃",
       "title": "厄斐琉斯",
       "roles": [
         "射手"
@@ -1217,7 +1217,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Aphelios.png"
     },
     {
-      "name": "镕铁少女-芮尔",
+      "name": "镕铁少女",
       "title": "芮尔",
       "roles": [
         "坦克"
@@ -1225,7 +1225,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Rell.png"
     },
     {
-      "name": "血港鬼影-派克",
+      "name": "血港鬼影",
       "title": "派克",
       "roles": [
         "刺客"
@@ -1233,7 +1233,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Pyke.png"
     },
     {
-      "name": "愁云使者-薇古丝",
+      "name": "愁云使者",
       "title": "薇古丝",
       "roles": [
         "法师"
@@ -1241,7 +1241,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Vex.png"
     },
     {
-      "name": "封魔剑魂-永恩",
+      "name": "封魔剑魂",
       "title": "永恩",
       "roles": [
         "战士"
@@ -1249,7 +1249,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Yone.png"
     },
     {
-      "name": "腕豪-瑟提",
+      "name": "腕豪",
       "title": "瑟提",
       "roles": [
         "战士"
@@ -1257,7 +1257,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Sett.png"
     },
     {
-      "name": "含羞蓓蕾-莉莉娅",
+      "name": "含羞蓓蕾",
       "title": "莉莉娅",
       "roles": [
         "法师"
@@ -1265,7 +1265,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Lillia.png"
     },
     {
-      "name": "灵罗娃娃-格温",
+      "name": "灵罗娃娃",
       "title": "格温",
       "roles": [
         "法师"
@@ -1273,7 +1273,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Gwen.png"
     },
     {
-      "name": "炼金男爵-烈娜塔 · 戈拉斯克",
+      "name": "炼金男爵",
       "title": "烈娜塔 · 戈拉斯克",
       "roles": [
         "法师"
@@ -1281,7 +1281,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Renata.png"
     },
     {
-      "name": "不羁之悦-尼菈",
+      "name": "不羁之悦",
       "title": "尼菈",
       "roles": [
         "射手"
@@ -1289,7 +1289,7 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Nilah.png"
     },
     {
-      "name": "纳祖芒荣耀-奎桑提",
+      "name": "纳祖芒荣耀",
       "title": "奎桑提",
       "roles": [
         "战士"
@@ -1297,22 +1297,14 @@
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/KSante.png"
     },
     {
-      "name": "明烛-米利欧",
+      "name": "明烛",
       "title": "米利欧",
       "roles": [
         "法师"
       ],
       "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Milio.png"
-    },
-    {
-      "name": "百裂冥犬-纳亚菲利",
-      "title": "纳亚菲利",
-      "roles": [
-        "刺客"
-      ],
-      "avatar": "https://game.gtimg.cn/images/lol/act/img/champion/Naafiri.png"
     }
   ],
-  "version": "13.15",
+  "version": "13.14",
   "fileTime": "2023-08-03 10:49:22"
 }

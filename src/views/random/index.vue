@@ -21,7 +21,12 @@
         />
       </a-tab-pane>
       <a-tab-pane key="3" class="px-5 tab-pane" title="英雄列表">
-        <hero-list :hero-file="heroFile" class="max-w-screen-lg" @change-role="handleChangeHero" />
+        <hero-list
+          :hero-file="heroFile"
+          class="max-w-screen-lg"
+          @change-hero-file="handleChangeHeroFile"
+          @change-role="handleChangeHero"
+        />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -262,6 +267,12 @@ const handleChangeHero = (data: { name: string, role: string }) => {
     localStorage.setItem('heroList', JSON.stringify(heroFile.value))
     initHero()
   }
+}
+
+const handleChangeHeroFile = (heroFile: HeroFile) => {
+  localStorage.setItem('heroList', JSON.stringify(heroFile))
+  initHero()
+  Message.success('更新成功')
 }
 
 const handleNotification = () => {

@@ -1,5 +1,18 @@
 <template>
   <div class="flex flex-wrap mb-4">
+    <div class="w-full">
+      <a-upload
+        ref="upload"
+        :on-before-upload="handleBeforeUpload"
+        :show-file-list="false"
+        accept=".json"
+        @change="handleImportHeroFile"
+      >
+        <template #upload-button>
+          <a-button type="primary">上传英雄配置文件</a-button>
+        </template>
+      </a-upload>
+    </div>
     <a-comment
       v-for="item in heroList"
       :key="item.name"
@@ -50,9 +63,11 @@
 </template>
 
 <script setup lang="ts">
+import { FileItem, Message } from '@arco-design/web-vue';
 import { HeroFile } from './index.vue';
 import { IconDown } from '@arco-design/web-vue/es/icon';
 import { Icon } from '@iconify/vue';
+import debounce from 'lodash.debounce';
 
 const props = defineProps<{
   heroFile?: HeroFile
@@ -63,6 +78,7 @@ const emit = defineEmits<{
     role: string,
     name: string,
   }): void
+  (e: 'change-hero-file', data: HeroFile): void
 }>()
 
 const heroList = computed(() => {
@@ -91,6 +107,35 @@ const colorMap: { [key: string]: { color: string, icon: string } } = {
     icon: 'vscode-icons:file-type-haml',
   },
 }
+
+const handleBeforeUpload = (file: File) => {
+  // 判断文件类型为json
+  if (file.type !== 'application/json') {
+    Message.warning('只能上传json文件')
+    return false
+  }
+  return true
+}
+
+const handleImportHeroFile = debounce((fileList: FileItem[]) => {
+  const { file } = fileList[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.readAsText(file)
+  reader.onload = () => {
+    try {
+      const heroFile: HeroFile = JSON.parse(reader.result as string)
+      if (!heroFile.fileTime || !heroFile.hero || !heroFile.hero.length || !heroFile.version) {
+        Message.error('文件解析失败')
+        return
+      }
+      emit('change-hero-file', heroFile)
+    } catch (error) {
+      Message.error('文件解析失败')
+    }
+  }
+}, 500)
+
 
 const handleChangeRole = (name: string, role?: string | number | Record<string, any>) => {
   emit('change-role', {
