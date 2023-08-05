@@ -10,6 +10,7 @@
       >
         <template #upload-button>
           <a-button type="primary">上传英雄配置文件</a-button>
+          <a-button class="ml-2" @click.stop="handleDownload">下载模板</a-button>
         </template>
       </a-upload>
     </div>
@@ -136,6 +137,14 @@ const handleImportHeroFile = debounce((fileList: FileItem[]) => {
   }
 }, 500)
 
+const handleDownload =async  () => {
+  const heroFile = await import('@/assets/hero-list.json')
+  const blob = new Blob([JSON.stringify(heroFile.default, null, 2)], { type: 'application/json' })
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(blob)
+  link.download = 'hero.json'
+  link.click()
+}
 
 const handleChangeRole = (name: string, role?: string | number | Record<string, any>) => {
   emit('change-role', {

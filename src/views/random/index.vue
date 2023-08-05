@@ -310,7 +310,7 @@ const initHero = async () => {
     // 从 https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js 获取
     // 与本地的英雄列表对比版本，如果有更新，就更新本地的英雄列表
     // 通过本地的英雄title匹配获取的英雄列表，有同样的则更新roles，没有则添加
-    const { data } = await fetch<HeroFile>('https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js')
+    const { data } = await fetch<HeroFile>('https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js').catch(() => ({ data:heroList }))
     if (data.version !== heroList.version) {
       handleNotification()
       data.hero = data.hero.map(item => {
