@@ -1,0 +1,11 @@
+{
+  "version": "v0.0.12",
+  "notes": "",
+  "pub_date": "2023-08-05T04:59:33.745Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRVFVDTDJ5dCtBUElaWHlrbDNnam1rVkhDTTNIWFVITERYZEFXNm4zR3dkbWx0OUh5Z3RXR1pydERHUC8wbUJwMXdGVlJEaUFlWmtDQlBaOUR2Tkk1Q1JiN21nQXVIRGcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjkxMjExNDg0CWZpbGU6TG9sUmFuZG9tR3JvdXBfMC4wLjEyX3g2NF9lbi1VUy5tc2kuemlwCkt4V1k2SU1xN3RWU25XQkJkL2ljRDNZS21EYnZJU0NyNWVYb1FCckZiVnU4elNGRDM4OTFsVllEWkgrYW5ZWjhoM0kxZy9wbU5TcWJqTXlMbkkrWEJ3PT0K",
+      "url": "https://github.com/Banana-energy/lol-group-random/releases/download/v0.0.12/LolRandomGroup_0.0.12_x64_en-US.msi.zip"
+    }
+  }
+}
